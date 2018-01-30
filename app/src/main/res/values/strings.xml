@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">VLCRemote</string>
+    <string name="itemlist_co_addr_format">IP: %s | PORT: %d</string>
 </resources>

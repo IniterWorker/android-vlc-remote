@@ -22,10 +22,13 @@ open class Connection : RealmObject() {
     open var ipaddr: String? = null
 
     @Expose
-    open var connectionTitle: String? = null
+    open var name: String? = null
 
     @Expose
     open var basicAuth: String? = null
+
+    @Expose
+    open var port: Int = 0
 
     fun setBasicAuth(username: String, password: String) {
         val basic: String = username + ":" + password
