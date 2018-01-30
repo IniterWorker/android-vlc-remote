@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:background="@color/colorGrey"
+        android:layout_height="80dp"
+        android:layout_width="match_parent">
+        <ImageView
+            android:id="@+id/itemlist_icon"
+            android:background="@drawable/ic_vlc"
+            android:layout_margin="15dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp" />
+
+        <LinearLayout
+            android:id="@+id/itemlist_container"
+            android:layout_toEndOf="@+id/itemlist_icon"
+            android:layout_width="match_parent"
+            android:padding="15dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/itemlist_name"
+                android:textSize="19sp"
+                android:text="Home VLC"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/itemlist_addr"
+                android:textSize="14sp"
+                android:text="IP 192.168.1.1 | PORT 8080"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/colorPrimaryDark" />
+
+</LinearLayout>
