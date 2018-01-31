@@ -69,6 +69,9 @@ class ConnectionEditFragment : Fragment() {
 
         holder.bind(mConnection!!, {
 
+            if (it.id == 0)
+                it.autoPrimaryKey()
+
             holder.bindFromView(it)
             it.createOrUpdate()
 

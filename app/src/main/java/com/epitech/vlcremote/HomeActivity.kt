@@ -36,6 +36,7 @@ class HomeActivity : AppCompatActivity(), ConnectionEditFragment.OnActionBtnList
 
 
         val connection = Connection()
+        connection.autoPrimaryKey()
         connection.name = "Nom de ma connection"
         connection.ipaddr = "192.168.1.44"
         connection.port = 8080
