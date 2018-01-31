@@ -3,6 +3,8 @@ package com.epitech.vlcremote
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import com.epitech.vlcremote.fragments.PlayerFragment
+import com.epitech.vlcremote.further.replaceFragment
 import com.epitech.vlcremote.models.Connection
 import com.epitech.vlcremote.services.VLCService
 import com.google.gson.ExclusionStrategy
@@ -44,15 +46,21 @@ class RemoteActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_remote)
 
+        setTitle("Search")
+
         if (intent.extras != null) {
             val connection: Connection? = queryFirst<Connection> { equalTo("id", intent.extras.getInt("id"))  }
 
             if (connection != null) {
+
                 val baseUrlConnection = "http://%s:%d".format(connection.ipaddr, connection.port)
 
                 val interceptor = HttpLoggingInterceptor()
+
                 interceptor.level = HttpLoggingInterceptor.Level.HEADERS
                 interceptor.level = HttpLoggingInterceptor.Level.BODY
+
+                setTitle(connection.name)
 
                 // TODO : remove and clean
                 // DEBUG Interceptor
@@ -79,6 +87,8 @@ class RemoteActivity : AppCompatActivity() {
                             error ->
                             Log.e("Error", error.message)
                         })
+
+                replaceFragment(PlayerFragment.newInstance(), R.id.frag_remote_ctn)
             }
         }
 
