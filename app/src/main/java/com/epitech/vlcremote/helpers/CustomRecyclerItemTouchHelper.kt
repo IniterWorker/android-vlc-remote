@@ -9,8 +9,8 @@ import com.epitech.vlcremote.adapters.ConnectionRecyclerViewAdapter
 
 
 /**
- * Created by initerworker on 30/01/18.
- */
+* Created by initerworker on 30/01/18.
+*/
 
 
 class CustomRecyclerItemTouchHelper(dragDirs: Int, swipeDirs: Int, listener: CustomRecyclerItemTouchHelperListener)

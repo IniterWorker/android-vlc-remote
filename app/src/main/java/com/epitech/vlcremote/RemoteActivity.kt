@@ -8,7 +8,6 @@ import com.epitech.vlcremote.services.VLCService
 import com.google.gson.ExclusionStrategy
 import com.google.gson.FieldAttributes
 import com.google.gson.GsonBuilder
-import com.vicpin.krealmextensions.equalToValue
 import com.vicpin.krealmextensions.queryFirst
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers

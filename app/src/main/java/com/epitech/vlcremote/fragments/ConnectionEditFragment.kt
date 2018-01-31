@@ -11,7 +11,6 @@ import com.epitech.vlcremote.R
 import com.epitech.vlcremote.models.Connection
 import com.vicpin.krealmextensions.createOrUpdate
 import com.vicpin.krealmextensions.queryFirst
-import com.vicpin.krealmextensions.save
 import kotlinx.android.synthetic.main.fragment_edit_connection.view.*
 
 /**

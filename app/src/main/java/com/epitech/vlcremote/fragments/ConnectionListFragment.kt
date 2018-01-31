@@ -17,12 +17,11 @@ import com.epitech.vlcremote.helpers.CustomRecyclerItemTouchHelperListener
 import com.epitech.vlcremote.models.Connection
 import com.vicpin.krealmextensions.delete
 import com.vicpin.krealmextensions.equalToValue
-import com.vicpin.krealmextensions.query
 import com.vicpin.krealmextensions.queryAll
 
 /**
- * Created by initerworker on 30/01/18.
- */
+* Created by initerworker on 30/01/18.
+*/
 
 class ConnectionListFragment : Fragment(), CustomRecyclerItemTouchHelperListener {
 

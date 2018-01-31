@@ -2,7 +2,6 @@ package com.epitech.vlcremote.adapters
 
 import android.support.v7.widget.RecyclerView
 import io.realm.RealmObject
-import io.realm.RealmResults
 
 
 /**
