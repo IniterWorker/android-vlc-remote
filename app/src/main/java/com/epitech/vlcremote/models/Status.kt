@@ -16,7 +16,7 @@ data class Status(
 	val version: String? = null,
 
 	@field:SerializedName("subtitledelay")
-	val subtitledelay: Int? = null,
+	val subtitledelay: Double? = null,
 
 	@field:SerializedName("audiofilters")
 	val audiofilters: Audiofilters? = null,
@@ -31,19 +31,22 @@ data class Status(
 	val currentplid: Int? = null,
 
 	@field:SerializedName("audiodelay")
-	val audiodelay: Int? = null,
+	val audiodelay: Double? = null,
 
 	@field:SerializedName("fullscreen")
 	val fullscreen: Int? = null,
 
+	@field:SerializedName("equalizer")
+	val equalizer: List<Any?>? = null,
+
 	@field:SerializedName("videoeffects")
 	val videoeffects: Videoeffects? = null,
 
-	@field:SerializedName("rate")
-	val rate: Int? = null,
+	@field:SerializedName("stats")
+	val stats: Stats? = null,
 
-	@field:SerializedName("equalizer")
-	val equalizer: List<Any?>? = null,
+	@field:SerializedName("rate")
+	val rate: Double? = null,
 
 	@field:SerializedName("loop")
 	val loop: Boolean? = null,
@@ -51,12 +54,15 @@ data class Status(
 	@field:SerializedName("repeat")
 	val repeat: Boolean? = null,
 
-	@field:SerializedName("state")
-	val state: String? = null,
+	@field:SerializedName("information")
+	val information: Information? = null,
 
 	@field:SerializedName("position")
-	val position: Int? = null,
+	val position: Double? = null,
 
 	@field:SerializedName("time")
-	val time: Int? = null
+	val time: Int? = null,
+
+	@field:SerializedName("state")
+	val state: String? = null
 )
