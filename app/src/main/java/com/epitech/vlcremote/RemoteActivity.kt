@@ -8,9 +8,13 @@ import com.epitech.vlcremote.services.VLCService
 import com.google.gson.ExclusionStrategy
 import com.google.gson.FieldAttributes
 import com.google.gson.GsonBuilder
+import com.vicpin.krealmextensions.equalToValue
+import com.vicpin.krealmextensions.queryFirst
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import io.realm.RealmObject
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -31,14 +35,9 @@ class RemoteActivity : AppCompatActivity() {
         }
     }).create()!!
 
-    private val retrofit: Retrofit = Retrofit.Builder()
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-            .addConverterFactory(GsonConverterFactory.create(gson))
-            .baseUrl("http://192.168.1.44:8080")
-            .build()
+    private var retrofit: Retrofit? = null
 
-    private val vlcService: VLCService = retrofit.create(VLCService::class.java)
-    private val connection: Connection = Connection()
+    private var vlcService: VLCService? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,17 +45,44 @@ class RemoteActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_remote)
 
-        connection.setBasicAuth("", "toto")
+        if (intent.extras != null) {
+            val connection: Connection? = queryFirst<Connection> { equalTo("id", intent.extras.getInt("id"))  }
 
-        vlcService.getVLCStatus(connection.basicAuth!!)
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    status ->
-                    Log.w("Debug", status.version)
-                }, {
-                    error ->
-                    Log.e("Error", error.message)
-                })
+            if (connection != null) {
+                val baseUrlConnection = "http://%s:%d".format(connection.ipaddr, connection.port)
+
+                val interceptor = HttpLoggingInterceptor()
+                interceptor.level = HttpLoggingInterceptor.Level.HEADERS
+                interceptor.level = HttpLoggingInterceptor.Level.BODY
+
+                // TODO : remove and clean
+                // DEBUG Interceptor
+                val client = OkHttpClient.Builder()
+                        .addInterceptor(interceptor)
+                        .build()
+
+                retrofit = Retrofit.Builder()
+                        .client(client)
+                        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                        .addConverterFactory(GsonConverterFactory.create(gson))
+                        .baseUrl(baseUrlConnection)
+                        .build()
+
+                vlcService = retrofit!!.create(VLCService::class.java)
+
+                vlcService!!.getVLCStatus(connection.basicToken())
+                        .subscribeOn(Schedulers.newThread())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe({
+                            status ->
+                            Log.w("Debug", status.version)
+                        }, {
+                            error ->
+                            Log.e("Error", error.message)
+                        })
+            }
+        }
+
+
     }
 }

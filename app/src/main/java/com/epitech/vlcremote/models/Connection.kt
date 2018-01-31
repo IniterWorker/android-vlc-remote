@@ -12,26 +12,29 @@ import java.util.*
  * Created by bonett_w on 1/29/18.
  */
 
-@RealmClass
-open class Connection : RealmObject() {
+open class Connection (
     @PrimaryKey
     @Expose
-    open var id: Int = 0
+    var id: Int = 0,
 
     @Expose
-    open var ipaddr: String? = null
+    var ipaddr: String? = null,
 
     @Expose
-    open var name: String? = null
+    var name: String? = null,
 
     @Expose
-    open var basicAuth: String? = null
+    var basicAuth: String? = null,
 
     @Expose
-    open var port: Int = 0
+    var port: Int = 0
 
+) : RealmObject() {
     fun setBasicAuth(username: String, password: String) {
-        val basic: String = username + ":" + password
-        basicAuth = Base64.encodeToString(basic.toByteArray(), Base64.NO_WRAP)
+        basicAuth = Base64.encodeToString("$username:$password".toByteArray(), Base64.NO_WRAP)
+    }
+
+    fun basicToken() : String {
+        return "Basic $basicAuth"
     }
 }

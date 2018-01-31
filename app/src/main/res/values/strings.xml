@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">VLCRemote</string>
-    <string name="itemlist_co_addr_format">IP: %s | PORT: %d</string>
+    <string name="itemlist_co_addr_format">#%d | IP: %s | PORT: %d</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
 </resources>
