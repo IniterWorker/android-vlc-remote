@@ -1,3 +1,5 @@
+@file:Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
+
 package com.epitech.vlcremote
 
 import android.os.Bundle
@@ -6,8 +8,8 @@ import io.realm.Realm
 import io.realm.RealmConfiguration
 
 /**
- * Created by initerworker on 31/01/18.
- */
+* Created by initerworker on 31/01/18.
+*/
 abstract class RealmActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
