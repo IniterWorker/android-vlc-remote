@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.Toast
 import com.epitech.vlcremote.R
+import com.epitech.vlcremote.models.Status
 import com.epitech.vlcremote.services.VLCService
 import kotlinx.android.synthetic.main.fragment_player.view.*
 
@@ -17,7 +18,7 @@ import kotlinx.android.synthetic.main.fragment_player.view.*
 
 class PlayerFragment() : Fragment() {
 
-    private var service: VLCService? = null;
+    var service: VLCService? = null
 
     companion object {
         fun newInstance(): PlayerFragment {
@@ -55,5 +56,9 @@ class PlayerFragment() : Fragment() {
     private fun onClickNext() {
         Toast.makeText(context, "Remote Next", Toast.LENGTH_SHORT).show()
         // TODO : Service next
+    }
+
+    fun updateStatus(status: Status) {
+        // TODO : update relative DataStatus
     }
 }
