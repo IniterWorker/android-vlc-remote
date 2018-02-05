@@ -10,7 +10,6 @@ import android.widget.Toast
 import com.epitech.vlcremote.R
 import com.epitech.vlcremote.models.Status
 import com.epitech.vlcremote.services.RemoteService
-import com.epitech.vlcremote.services.VLCService
 import kotlinx.android.synthetic.main.fragment_player.view.*
 
 /**
@@ -42,6 +41,19 @@ class PlayerFragment() : Fragment() {
         }
 
         return view
+    }
+
+    private fun formatSecondsToString(seconds: Int) : String {
+        var H: Int = 0
+        var M: Int = 0
+        var S: Int = 0
+
+        M = seconds / 60
+        S = seconds % 60
+        H = M / 60
+        M %= 60
+
+        return "%2d:%2d:%2d".format(H, M, S)
     }
 
     private fun onClickBack() {

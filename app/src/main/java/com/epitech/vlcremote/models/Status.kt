@@ -34,7 +34,7 @@ data class Status(
 	val audiodelay: Double? = null,
 
 	@field:SerializedName("fullscreen")
-	val fullscreen: Int? = null,
+	val fullscreen: Boolean? = null,
 
 	@field:SerializedName("equalizer")
 	val equalizer: List<Any?>? = null,
