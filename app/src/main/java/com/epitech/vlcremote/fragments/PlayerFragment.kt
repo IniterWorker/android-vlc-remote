@@ -9,6 +9,7 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import com.epitech.vlcremote.R
 import com.epitech.vlcremote.models.Status
+import com.epitech.vlcremote.services.RemoteService
 import com.epitech.vlcremote.services.VLCService
 import kotlinx.android.synthetic.main.fragment_player.view.*
 
@@ -18,7 +19,7 @@ import kotlinx.android.synthetic.main.fragment_player.view.*
 
 class PlayerFragment() : Fragment() {
 
-    var service: VLCService? = null
+    lateinit var remoteService: RemoteService
 
     companion object {
         fun newInstance(): PlayerFragment {
