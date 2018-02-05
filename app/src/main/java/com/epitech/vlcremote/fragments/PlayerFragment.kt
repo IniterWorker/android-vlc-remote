@@ -8,10 +8,12 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.Toast
 import com.epitech.vlcremote.R
+import com.epitech.vlcremote.models.Connection
 import com.epitech.vlcremote.models.Status
 import com.epitech.vlcremote.services.RemoteService
 import kotlinx.android.synthetic.main.fragment_player.view.*
-
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 /**
 * Created by initerworker on 31/01/18.
 */
@@ -19,6 +21,8 @@ import kotlinx.android.synthetic.main.fragment_player.view.*
 class PlayerFragment() : Fragment() {
 
     lateinit var remoteService: RemoteService
+    lateinit var connection: Connection
+    lateinit var status: Status
 
     companion object {
         fun newInstance(): PlayerFragment {
@@ -63,6 +67,10 @@ class PlayerFragment() : Fragment() {
 
     private fun onClickStart() {
         Toast.makeText(context, "Remote Play/Pause", Toast.LENGTH_SHORT).show()
+        remoteService.vlcService!!.togglePlayPause(connection.basicToken())
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ t: Status -> status = t }, { error -> Toast.makeText(context, "Not ok", Toast.LENGTH_SHORT).show() })
         // TODO : Service toggle Start / Stop
     }
 

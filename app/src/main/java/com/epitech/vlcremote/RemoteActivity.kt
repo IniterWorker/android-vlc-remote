@@ -36,6 +36,7 @@ class RemoteActivity : AppCompatActivity() {
 
                 // inject in fragments
                 playerFragment.remoteService = remoteService
+                playerFragment.connection = connection
 
                 remoteService.runUpdateWith(connection, {
                     error ->
