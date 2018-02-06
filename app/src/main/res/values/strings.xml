@@ -3,4 +3,7 @@
     <string name="itemlist_co_addr_format">#%d | IP: %s | PORT: %d</string>
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
+    <string name="tab_playlist">Playlist</string>
+    <string name="tab_player">Player</string>
+    <string name="tab_browser">Browser</string>
 </resources>

@@ -1,28 +1,29 @@
 package com.epitech.vlcremote.fragments
 
 import android.os.Bundle
+import android.support.constraint.ConstraintLayout
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import android.widget.Toast
 import com.epitech.vlcremote.R
 import com.epitech.vlcremote.models.Connection
 import com.epitech.vlcremote.models.Status
 import com.epitech.vlcremote.services.RemoteService
-import kotlinx.android.synthetic.main.fragment_player.view.*
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.fragment_player.view.*
+
 /**
 * Created by initerworker on 31/01/18.
 */
 
 class PlayerFragment() : Fragment() {
 
-    lateinit var remoteService: RemoteService
-    lateinit var connection: Connection
-    lateinit var status: Status
+    var remoteService: RemoteService? = null
+    var connection: Connection? = null
+    private var status: Status? = null
 
     companion object {
         fun newInstance(): PlayerFragment {
@@ -35,13 +36,13 @@ class PlayerFragment() : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        val view: LinearLayout = inflater!!.inflate(R.layout.fragment_player, container, false) as LinearLayout
+        val view: ConstraintLayout = inflater!!.inflate(R.layout.fragment_player, container, false) as ConstraintLayout
 
         // TODO: write all user interface
         with(view) {
-            remote_back.setOnClickListener { onClickBack() }
-            remote_start.setOnClickListener { onClickStart() }
-            remote_next.setOnClickListener { onClickNext() }
+            player_left_arrow.setOnClickListener { onClickBack() }
+            player_play.setOnClickListener { onClickStart() }
+            player_right_arrow.setOnClickListener { onClickNext() }
         }
 
         return view
@@ -61,8 +62,9 @@ class PlayerFragment() : Fragment() {
     }
 
     private fun onClickBack() {
+        if (connection == null) return
         Toast.makeText(context, "Remote Back", Toast.LENGTH_SHORT).show()
-        remoteService.vlcService!!.jumpPrevious(connection.basicToken())
+        remoteService!!.vlcService!!.jumpPrevious(connection!!.basicToken())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ t: Status -> status = t }, { error -> Toast.makeText(context, "Not ok", Toast.LENGTH_SHORT).show() })
@@ -70,8 +72,9 @@ class PlayerFragment() : Fragment() {
     }
 
     private fun onClickStart() {
+        if (connection == null) return
         Toast.makeText(context, "Remote Play/Pause", Toast.LENGTH_SHORT).show()
-        remoteService.vlcService!!.togglePlayPause(connection.basicToken())
+        remoteService!!.vlcService!!.togglePlayPause(connection!!.basicToken())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ t: Status -> status = t }, { error -> Toast.makeText(context, "Not ok", Toast.LENGTH_SHORT).show() })
@@ -79,8 +82,9 @@ class PlayerFragment() : Fragment() {
     }
 
     private fun onClickNext() {
+        if (connection == null) return
         Toast.makeText(context, "Remote Next", Toast.LENGTH_SHORT).show()
-        remoteService.vlcService!!.jumpNext(connection.basicToken())
+        remoteService!!.vlcService!!.jumpNext(connection!!.basicToken())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ t: Status -> status = t }, { error -> Toast.makeText(context, "Not ok", Toast.LENGTH_SHORT).show() })

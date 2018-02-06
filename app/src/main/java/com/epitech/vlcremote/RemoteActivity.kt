@@ -1,51 +1,118 @@
 package com.epitech.vlcremote
 
 import android.os.Bundle
+import android.support.v4.app.Fragment
+import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
-import android.widget.Toast
+import com.aurelhubert.ahbottomnavigation.AHBottomNavigation
+import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem
+import com.epitech.vlcremote.adapters.RemoteViewPagerAdapter
+import com.epitech.vlcremote.fragments.BrowserFragment
+import com.epitech.vlcremote.fragments.PlayListFragment
 import com.epitech.vlcremote.fragments.PlayerFragment
-import com.epitech.vlcremote.further.replaceFragment
 import com.epitech.vlcremote.models.Connection
 import com.epitech.vlcremote.services.RemoteService
 import com.vicpin.krealmextensions.queryFirst
+import kotlinx.android.synthetic.main.activity_remote.*
+
 
 /**
 * Created by bonett_w on 1/29/18.
 */
 
-class RemoteActivity : AppCompatActivity() {
+class RemoteActivity :
+        AppCompatActivity(),
+        AHBottomNavigation.OnTabSelectedListener,
+        AHBottomNavigation.OnNavigationPositionListener {
 
-    lateinit var remoteService: RemoteService
-    lateinit var playerFragment: PlayerFragment
+    private var remoteService: RemoteService? = null
+    private var remoteViewPager: RemoteViewPagerAdapter? = null
+    private var currentFragment: Fragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_remote)
 
-        playerFragment = PlayerFragment.newInstance()
+        remoteViewPager = RemoteViewPagerAdapter(supportFragmentManager)
+
+        viewPager.adapter = remoteViewPager
+
+        initNavigationBar()
 
         title = "Search"
 
         if (intent.extras != null) {
+
             val connection: Connection? = queryFirst<Connection> { equalTo("id", intent.extras.getInt("id")) }
             if (connection != null) {
-                // init remote service
-                remoteService = RemoteService(connection.ipaddr!!, connection.port)
+                remoteService = RemoteService(connection.ipaddr!!, connection.id)
 
-                // inject in fragments
+                val playerFragment = PlayListFragment.newInstance()
+                val playlistFragment = PlayerFragment.newInstance()
+                val browserFragment = BrowserFragment.newInstance()
+
                 playerFragment.remoteService = remoteService
-                playerFragment.connection = connection
+                playlistFragment.remoteService = remoteService
+                browserFragment.remoteService = remoteService
 
-                remoteService.runUpdateWith(connection, {
-                    error ->
-                        Toast.makeText(baseContext, error.message, Toast.LENGTH_SHORT).show()
-                        Log.e("RemoteService", error.message)
-                })
+                remoteViewPager!!.fragments.add(playerFragment)
+                remoteViewPager!!.fragments.add(playlistFragment)
+                remoteViewPager!!.fragments.add(browserFragment)
 
-                replaceFragment(playerFragment, R.id.remote_frag_container)
+                remoteViewPager!!.notifyDataSetChanged()
+
             }
         }
+    }
+
+    private fun initNavigationBar() {
+        val item1 = AHBottomNavigationItem(R.string.tab_playlist, R.drawable.ic_desktop, R.color.colorInactive)
+        val item2 = AHBottomNavigationItem(R.string.tab_player, R.drawable.ic_desktop, R.color.colorInactive)
+        val item3 = AHBottomNavigationItem(R.string.tab_browser, R.drawable.ic_desktop, R.color.colorInactive)
+
+        bottom_navigation.addItem(item1)
+        bottom_navigation.addItem(item2)
+        bottom_navigation.addItem(item3)
+
+        bottom_navigation.accentColor = ContextCompat.getColor(this, R.color.colorAccent)
+        bottom_navigation.inactiveColor = ContextCompat.getColor(this, R.color.colorInactive)
+        bottom_navigation.defaultBackgroundColor = ContextCompat.getColor(this, R.color.colorGrey)
+        bottom_navigation.isForceTint = true
+
+        // Manage titles
+        bottom_navigation.titleState = AHBottomNavigation.TitleState.SHOW_WHEN_ACTIVE
+        bottom_navigation.titleState = AHBottomNavigation.TitleState.ALWAYS_SHOW
+        bottom_navigation.titleState = AHBottomNavigation.TitleState.ALWAYS_HIDE
+
+        bottom_navigation.setOnTabSelectedListener(this)
+
+    }
+
+    override fun onTabSelected(position: Int, wasSelected: Boolean): Boolean {
+
+        if (currentFragment == null) {
+            currentFragment = remoteViewPager!!.currentFragment
+        }
+
+        if (wasSelected) {
+            // refresh
+            return true
+        }
+
+        if (currentFragment != null) {
+            // will be hidden
+        }
+
+        viewPager.setCurrentItem(position, false)
+
+        if (currentFragment == null) {
+            return true
+        }
+
+        return true
+    }
+
+    override fun onPositionChange(y: Int) {
     }
 }

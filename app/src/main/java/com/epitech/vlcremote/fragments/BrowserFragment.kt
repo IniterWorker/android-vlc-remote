@@ -1,8 +1,8 @@
 package com.epitech.vlcremote.fragments
 
 import android.os.Bundle
+import android.support.constraint.ConstraintLayout
 import android.support.v4.app.Fragment
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,13 +14,13 @@ import com.epitech.vlcremote.services.RemoteService
 * Created by initerworker on 05/02/18.
 */
 
-class PlayListFragment : Fragment() {
+class BrowserFragment() : Fragment() {
 
     var remoteService: RemoteService? = null
 
     companion object {
-        fun newInstance(): PlayListFragment {
-            return PlayListFragment()
+        fun newInstance(): BrowserFragment {
+            return BrowserFragment()
         }
     }
 
@@ -29,7 +29,7 @@ class PlayListFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        val view: RecyclerView = inflater!!.inflate(R.layout.fragment_playlist, container, false) as RecyclerView
+        val view: ConstraintLayout = inflater!!.inflate(R.layout.fragment_browser, container, false) as ConstraintLayout
 
         // TODO: write all user interface
         with(view) {

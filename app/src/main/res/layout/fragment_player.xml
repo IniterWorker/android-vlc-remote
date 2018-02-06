@@ -1,95 +1,216 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:orientation="vertical"
-    android:gravity="center"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+android:layout_height="match_parent"
+xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <LinearLayout
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+<android.support.constraint.ConstraintLayout
+    android:id="@+id/remote_header"
+    android:layout_width="0dp"
+    android:layout_height="0dp"
+    android:background="@color/colorPrimaryDark"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintRight_toRightOf="parent"
+    app:layout_constraintBottom_toTopOf="@+id/remote_frag_container"
+    android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/remote_time_current"
-            android:textSize="14sp"
-            android:text="00:00:00"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <android.support.v7.widget.AppCompatSeekBar
-            android:id="@+id/remote_time_seekbar"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_width="120dp"
-            android:layout_height="40dp" />
-
-        <TextView
-            android:id="@+id/remote_time_end"
-            android:textSize="14sp"
-            android:text="00:00:00"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_marginTop="20dp"
-        android:layout_width="match_parent"
+    <ImageButton
+        android:id="@+id/player_subtitle"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal">
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@null"
+        android:tint="@color/colorInactive"
+        android:scaleType="center"
+        android:scaleX="0.8"
+        android:scaleY="0.8"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_comment" android:contentDescription="TODO"/>
+
+    <ImageButton
+        android:id="@+id/player_fullscreen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:background="@null"
+        android:tint="@color/colorInactive"
+        android:scaleType="center"
+        android:scaleX="0.8"
+        android:scaleY="0.8"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ic_desktop" android:contentDescription="TODO"/>
+
+    <TextView
+        android:id="@+id/remote_tv_quick"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Quick Information"
+        app:layout_constraintEnd_toStartOf="@+id/player_subtitle"
+        app:layout_constraintStart_toEndOf="@+id/player_fullscreen"
+        app:layout_constraintTop_toBottomOf="@+id/remote_tv_title" />
+
+    <TextView
+        android:id="@+id/remote_tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Movie Title"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/player_subtitle"
+        app:layout_constraintStart_toEndOf="@+id/player_fullscreen"
+        app:layout_constraintTop_toTopOf="parent" />
+</android.support.constraint.ConstraintLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/remote_frag_container"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/remote_header">
+
+
+        <SeekBar
+            android:id="@+id/player_position"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toStartOf="@+id/player_tv_end_time"
+            app:layout_constraintHorizontal_bias="0.56"
+            app:layout_constraintStart_toEndOf="@+id/player_tv_current_time"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/player_tv_current_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            android:text="TextView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/player_tv_end_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            android:layout_marginTop="16dp"
+            android:text="TextView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
-            android:backgroundTint="@color/colorPrimary"
-            android:background="@drawable/ic_arrow_back"
-            android:id="@+id/remote_back"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_marginRight="10dp" />
+            android:id="@+id/player_play"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:adjustViewBounds="false"
+            android:background="@null"
+            android:cropToPadding="false"
+            android:elevation="0dp"
+            android:scaleType="fitXY"
+            android:tint="@color/colorInactive"
+            app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
+            app:layout_constraintEnd_toStartOf="@+id/player_right_arrow"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/player_left_arrow"
+            app:layout_constraintTop_toBottomOf="@+id/player_position"
+            app:srcCompat="@drawable/ic_play_arrow" />
 
         <ImageButton
-            android:backgroundTint="@color/colorPrimary"
-            android:background="@drawable/ic_play_arrow"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:id="@+id/remote_start" />
+            android:id="@+id/player_left_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="8dp"
+            android:background="@null"
+            android:tint="@color/colorInactive"
+            app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/player_tv_current_time"
+            app:srcCompat="@drawable/ic_arrow_back" />
 
         <ImageButton
-            android:backgroundTint="@color/colorPrimary"
-            android:background="@drawable/ic_arrow_forward"
-            android:id="@+id/remote_next"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_marginRight="10dp" />
+            android:id="@+id/player_right_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginTop="8dp"
+            android:background="@null"
+            android:tint="@color/colorInactive"
+            app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/player_tv_end_time"
+            app:srcCompat="@drawable/ic_arrow_forward" />
 
-    </LinearLayout>
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/constraintLayout"
+            android:layout_width="395dp"
+            android:layout_height="27dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
 
-    <LinearLayout
-        android:layout_marginTop="20dp"
-        android:gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/ic_volume"
+                android:backgroundTint="@color/colorPrimary"
+                app:layout_constraintEnd_toEndOf="parent" />
 
-        <ImageView
-            android:backgroundTint="@color/colorPrimary"
-            android:background="@drawable/ic_volume"
-            android:layout_width="40dp"
-            android:layout_height="40dp" />
+            <SeekBar
+                android:id="@+id/player_volume"
+                android:layout_width="267dp"
+                android:layout_height="14dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/imageView"
+                app:layout_constraintStart_toEndOf="@+id/imageView2"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <android.support.v7.widget.AppCompatSeekBar
-            android:id="@+id/remote_volume_seekbar"
-            android:layout_width="200dp"
-            android:layout_height="40dp" />
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/ic_volume"
+                android:backgroundTint="@color/colorPrimary"
+                app:layout_constraintStart_toStartOf="parent" />
 
-        <ImageView
-            android:backgroundTint="@color/colorPrimary"
-            android:background="@drawable/ic_volume"
-            android:layout_width="40dp"
-            android:layout_height="40dp" />
 
-    </LinearLayout>
+        </android.support.constraint.ConstraintLayout>
+    </android.support.constraint.ConstraintLayout>
 
-</LinearLayout>
+</android.support.constraint.ConstraintLayout>

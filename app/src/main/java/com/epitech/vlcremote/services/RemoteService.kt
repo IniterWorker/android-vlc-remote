@@ -16,20 +16,33 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
+import com.epitech.vlcremote.gson.BooleanSerializer
+import com.google.gson.Gson
+
 
 /**
  * Created by initerworker on 02/02/18.
  */
 open class RemoteService(ipaddr: String, port: Int) {
-    private val gson = GsonBuilder().setExclusionStrategies(object : ExclusionStrategy {
-        override fun shouldSkipClass(clazz: Class<*>?): Boolean {
-            return false
-        }
+    private val gson: Gson
 
-        override fun shouldSkipField(f: FieldAttributes): Boolean {
-            return f.declaredClass == RealmObject::class.java
-        }
-    }).create()!!
+    init {
+        val b = GsonBuilder().setExclusionStrategies(object : ExclusionStrategy {
+            override fun shouldSkipClass(clazz: Class<*>?): Boolean {
+                return false
+            }
+
+            override fun shouldSkipField(f: FieldAttributes): Boolean {
+                return f.declaredClass == RealmObject::class.java
+            }
+        })
+
+        val serializer = BooleanSerializer()
+        b.registerTypeAdapter(Boolean::class.java, serializer)
+        b.registerTypeAdapter(Boolean::class.javaPrimitiveType, serializer)
+        gson = b.create()!!
+    }
+
 
     private var retrofit: Retrofit? = null
 
