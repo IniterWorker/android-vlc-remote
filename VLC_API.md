@@ -33,7 +33,7 @@ With VALUE :
 |pl_play|Play a specific elem in playlist|id=*\${id}* (\${id} -> elem id) |
 |in_play|Play a file not in playlist (and add it to playlist)|input=*file:///path/to/file*|
 |fullscreen|Toggle fullscreen|*none*|
-|seek|Move to a given moment. value must be [+ or -][<int><H or h>:][<int><M or m or '>:][<int><nothing or S or s or ">] or [+ or -]<int>% (value between [ ] are optional, value between < > are mandatory)| val=*value*|
+|seek|`Move to a given moment. value must be [+ or -][<int><H or h>:][<int><M or m or '>:][<int><nothing or S or s or ">] or [+ or -]<int>% (value between [ ] are optional, value between < > are mandatory)`| val=*value*|
 |volume|Change Volume (between 0 and 512). Can be percent (<int>%), absolute (<int>) or relative (+/-<int>)|val=*volume_value*|
 |subdelay|Add delay for subtitles|val=*delay* (delay is in sec)|
 |audiodelay|Add delay for audio|val=*delay* (delay is in sec)|
