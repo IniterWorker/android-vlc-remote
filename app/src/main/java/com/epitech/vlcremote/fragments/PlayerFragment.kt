@@ -62,6 +62,10 @@ class PlayerFragment() : Fragment() {
 
     private fun onClickBack() {
         Toast.makeText(context, "Remote Back", Toast.LENGTH_SHORT).show()
+        remoteService.vlcService!!.jumpPrevious(connection.basicToken())
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ t: Status -> status = t }, { error -> Toast.makeText(context, "Not ok", Toast.LENGTH_SHORT).show() })
         // TODO : Service back
     }
 
@@ -76,6 +80,10 @@ class PlayerFragment() : Fragment() {
 
     private fun onClickNext() {
         Toast.makeText(context, "Remote Next", Toast.LENGTH_SHORT).show()
+        remoteService.vlcService!!.jumpNext(connection.basicToken())
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ t: Status -> status = t }, { error -> Toast.makeText(context, "Not ok", Toast.LENGTH_SHORT).show() })
         // TODO : Service next
     }
 
