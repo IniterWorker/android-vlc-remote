@@ -65,4 +65,21 @@ data class Status(
 
 	@field:SerializedName("state")
 	val state: String? = null
-)
+) {
+    private fun formatSecondsToString(seconds: Int) : String {
+        var H: Int = 0
+        var M: Int = 0
+        var S: Int = 0
+
+        M = seconds / 60
+        S = seconds % 60
+        H = M / 60
+        M %= 60
+
+        return "%2d:%2d:%2d".format(H, M, S)
+    }
+
+    fun currentTimeFromated() : String = formatSecondsToString(length!!)
+
+    fun endTimeFormated() : String = formatSecondsToString(length!!)
+}

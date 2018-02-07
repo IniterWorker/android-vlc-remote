@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.epitech.vlcremote.R
-import com.epitech.vlcremote.models.Connection
 import com.epitech.vlcremote.models.Status
 import com.epitech.vlcremote.services.RemoteService
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -22,7 +21,6 @@ import kotlinx.android.synthetic.main.fragment_player.view.*
 class PlayerFragment() : Fragment() {
 
     var remoteService: RemoteService? = null
-    var connection: Connection? = null
     private var status: Status? = null
 
     companion object {
@@ -43,28 +41,20 @@ class PlayerFragment() : Fragment() {
             player_left_arrow.setOnClickListener { onClickBack() }
             player_play.setOnClickListener { onClickStart() }
             player_right_arrow.setOnClickListener { onClickNext() }
+            player_fullscreen.setOnClickListener { onClickFullScreen() }
         }
 
         return view
     }
 
-    private fun formatSecondsToString(seconds: Int) : String {
-        var H: Int = 0
-        var M: Int = 0
-        var S: Int = 0
-
-        M = seconds / 60
-        S = seconds % 60
-        H = M / 60
-        M %= 60
-
-        return "%2d:%2d:%2d".format(H, M, S)
+    private fun onClickFullScreen() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     private fun onClickBack() {
-        if (connection == null) return
+        if (remoteService == null) return
         Toast.makeText(context, "Remote Back", Toast.LENGTH_SHORT).show()
-        remoteService!!.vlcService!!.jumpPrevious(connection!!.basicToken())
+        remoteService!!.vlcService!!.jumpPrevious(remoteService!!.connection!!.basicToken())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ t: Status -> status = t }, { error -> Toast.makeText(context, "Not ok", Toast.LENGTH_SHORT).show() })
@@ -72,9 +62,9 @@ class PlayerFragment() : Fragment() {
     }
 
     private fun onClickStart() {
-        if (connection == null) return
+        if (remoteService == null) return
         Toast.makeText(context, "Remote Play/Pause", Toast.LENGTH_SHORT).show()
-        remoteService!!.vlcService!!.togglePlayPause(connection!!.basicToken())
+        remoteService!!.vlcService!!.togglePlayPause(remoteService!!.connection!!.basicToken())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ t: Status -> status = t }, { error -> Toast.makeText(context, "Not ok", Toast.LENGTH_SHORT).show() })
@@ -82,9 +72,9 @@ class PlayerFragment() : Fragment() {
     }
 
     private fun onClickNext() {
-        if (connection == null) return
+        if (remoteService == null) return
         Toast.makeText(context, "Remote Next", Toast.LENGTH_SHORT).show()
-        remoteService!!.vlcService!!.jumpNext(connection!!.basicToken())
+        remoteService!!.vlcService!!.jumpNext(remoteService!!.connection!!.basicToken())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ t: Status -> status = t }, { error -> Toast.makeText(context, "Not ok", Toast.LENGTH_SHORT).show() })

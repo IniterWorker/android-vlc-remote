@@ -1,6 +1,5 @@
 package com.epitech.vlcremote.services
 
-import android.util.Log
 import com.epitech.vlcremote.models.Connection
 import com.epitech.vlcremote.models.Status
 import com.google.gson.ExclusionStrategy
@@ -23,7 +22,7 @@ import com.google.gson.Gson
 /**
  * Created by initerworker on 02/02/18.
  */
-open class RemoteService(ipaddr: String, port: Int) {
+open class RemoteService(var connection: Connection) {
     private val gson: Gson
 
     init {
@@ -53,7 +52,7 @@ open class RemoteService(ipaddr: String, port: Int) {
         private set(status) { field = status }
 
     init {
-        val baseUrlConnection = "http://%s:%d".format(ipaddr, port)
+        val baseUrlConnection = "http://%s:%d".format(connection.ipaddr, connection.port)
 
         val interceptor = HttpLoggingInterceptor()
         interceptor.level = HttpLoggingInterceptor.Level.HEADERS

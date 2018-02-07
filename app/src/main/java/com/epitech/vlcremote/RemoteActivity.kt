@@ -51,7 +51,7 @@ class RemoteActivity :
 
             val connection: Connection? = queryFirst<Connection> { equalTo("id", intent.extras.getInt("id")) }
             if (connection != null) {
-                remoteService = RemoteService(connection.ipaddr!!, connection.id)
+                remoteService = RemoteService(connection)
 
                 val playerFragment = PlayListFragment.newInstance()
                 val playlistFragment = PlayerFragment.newInstance()
@@ -60,6 +60,8 @@ class RemoteActivity :
                 playerFragment.remoteService = remoteService
                 playlistFragment.remoteService = remoteService
                 browserFragment.remoteService = remoteService
+
+
 
                 remoteViewPager!!.fragments.add(playerFragment)
                 remoteViewPager!!.fragments.add(playlistFragment)
