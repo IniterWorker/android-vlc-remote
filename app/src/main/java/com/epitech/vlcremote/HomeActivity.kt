@@ -2,12 +2,14 @@ package com.epitech.vlcremote
 
 import android.content.Intent
 import android.os.Bundle
+import android.support.v4.view.LayoutInflaterCompat
 import android.util.Log
 import android.widget.Toast
 import com.epitech.vlcremote.fragments.ConnectionEditFragment
 import com.epitech.vlcremote.fragments.ConnectionListFragment
 import com.epitech.vlcremote.further.replaceFragment
 import com.epitech.vlcremote.models.Connection
+import com.mikepenz.iconics.context.IconicsLayoutInflater2
 import com.vicpin.krealmextensions.count
 import com.vicpin.krealmextensions.save
 import kotlinx.android.synthetic.main.activity_home.*
@@ -22,6 +24,8 @@ class HomeActivity :
     private lateinit var listFragment: ConnectionListFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        LayoutInflaterCompat.setFactory2(layoutInflater,  IconicsLayoutInflater2(delegate))
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 

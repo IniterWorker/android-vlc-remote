@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="MissingPrefix"
     android:layout_width="match_parent"
-android:layout_height="match_parent"
-xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
 <android.support.constraint.ConstraintLayout
     android:id="@+id/remote_header"
@@ -17,10 +17,12 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
     app:layout_constraintBottom_toTopOf="@+id/remote_frag_container"
     android:orientation="vertical">
 
-    <ImageButton
+    <com.mikepenz.iconics.view.IconicsImageButton
         android:id="@+id/player_subtitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:minHeight="42dp"
+        android:minWidth="42dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:background="@null"
@@ -30,9 +32,12 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
         android:scaleY="0.8"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_comment" android:contentDescription="TODO"/>
+        app:iiv_icon="faw-comment"
+        app:iiv_size="42dp"
+        app:iiv_color="@color/colorPrimary"
+        android:contentDescription="TODO"/>
 
-    <ImageButton
+    <com.mikepenz.iconics.view.IconicsImageButton
         android:id="@+id/player_fullscreen"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -43,9 +48,14 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
         android:scaleType="center"
         android:scaleX="0.8"
         android:scaleY="0.8"
+        android:minHeight="42dp"
+        android:minWidth="42dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/ic_desktop" android:contentDescription="TODO"/>
+        app:iiv_icon="faw-desktop"
+        app:iiv_size="42dp"
+        app:iiv_color="@color/colorPrimary"
+        android:contentDescription="TODO"/>
 
     <TextView
         android:id="@+id/remote_tv_quick"
@@ -104,7 +114,7 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
             android:layout_marginTop="16dp"
-            android:text="TextView"
+            android:text="00:00:00"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -114,11 +124,11 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
             android:layout_height="wrap_content"
             android:layout_marginEnd="32dp"
             android:layout_marginTop="16dp"
-            android:text="TextView"
+            android:text="00:00:00"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageButton
+        <com.mikepenz.iconics.view.IconicsImageButton
             android:id="@+id/player_play"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -126,6 +136,7 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
             android:layout_marginEnd="24dp"
             android:layout_marginStart="24dp"
             android:layout_marginTop="24dp"
+            android:padding="20dp"
             android:adjustViewBounds="false"
             android:background="@null"
             android:cropToPadding="false"
@@ -137,12 +148,15 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/player_left_arrow"
             app:layout_constraintTop_toBottomOf="@+id/player_position"
-            app:srcCompat="@drawable/ic_play_arrow" />
+            app:iiv_icon="faw-play"
+            app:iiv_color="@color/colorInactive"/>
 
-        <ImageButton
+        <com.mikepenz.iconics.view.IconicsImageButton
             android:id="@+id/player_left_arrow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:minHeight="20dp"
+            android:minWidth="20dp"
             android:layout_marginBottom="8dp"
             android:layout_marginStart="32dp"
             android:layout_marginTop="8dp"
@@ -151,12 +165,16 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
             app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/player_tv_current_time"
-            app:srcCompat="@drawable/ic_arrow_back" />
+            app:iiv_icon="faw-fast-backward"
+            app:iiv_size="42dp"
+            app:iiv_color="@color/colorInactive" />
 
-        <ImageButton
+        <com.mikepenz.iconics.view.IconicsImageButton
             android:id="@+id/player_right_arrow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:minHeight="20dp"
+            android:minWidth="20dp"
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="32dp"
             android:layout_marginTop="8dp"
@@ -165,7 +183,86 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
             app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/player_tv_end_time"
-            app:srcCompat="@drawable/ic_arrow_forward" />
+            app:iiv_icon="faw-fast-forward"
+            app:iiv_size="42dp"
+            app:iiv_color="@color/colorInactive" />
+
+        <com.mikepenz.iconics.view.IconicsImageButton
+            android:id="@+id/player_left_arrow_low"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginTop="24dp"
+            android:background="@null"
+            android:minHeight="20dp"
+            android:minWidth="20dp"
+            android:tint="@color/colorInactive"
+            app:iiv_color="@color/colorInactive"
+            app:iiv_icon="faw-forward"
+            app:iiv_size="32dp"
+            app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
+            app:layout_constraintEnd_toStartOf="@+id/player_right_arrow"
+            app:layout_constraintTop_toTopOf="@+id/player_play" />
+
+        <com.mikepenz.iconics.view.IconicsImageButton
+            android:id="@+id/player_right_arrow_low"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:background="@null"
+            android:minHeight="20dp"
+            android:minWidth="20dp"
+            android:tint="@color/colorInactive"
+            app:iiv_color="@color/colorInactive"
+            app:iiv_icon="faw-backward"
+            app:iiv_size="32dp"
+            app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
+            app:layout_constraintStart_toEndOf="@+id/player_left_arrow"
+            app:layout_constraintTop_toTopOf="@+id/player_play" />
+
+        <com.mikepenz.iconics.view.IconicsImageButton
+            android:id="@+id/player_repeat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="24dp"
+            android:background="@null"
+            android:minHeight="20dp"
+            android:minWidth="20dp"
+            android:tint="@color/colorInactive"
+            app:iiv_color="@color/colorInactive"
+            app:iiv_icon="faw-redo"
+            app:iiv_size="32dp"
+            app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
+            app:layout_constraintEnd_toStartOf="@+id/player_right_arrow"
+            app:layout_constraintStart_toEndOf="@+id/player_play"
+            app:layout_constraintTop_toTopOf="@+id/player_left_arrow_low" />
+
+        <com.mikepenz.iconics.view.IconicsImageButton
+            android:id="@+id/player_random"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="24dp"
+            android:background="@null"
+            android:minHeight="20dp"
+            android:minWidth="20dp"
+            android:tint="@color/colorInactive"
+            app:iiv_color="@color/colorInactive"
+            app:iiv_icon="faw-random"
+            app:iiv_size="32dp"
+            app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
+            app:layout_constraintEnd_toStartOf="@+id/player_right_arrow_low"
+            app:layout_constraintStart_toEndOf="@+id/player_left_arrow"
+            app:layout_constraintTop_toTopOf="@+id/player_right_arrow_low" />
+
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/constraintLayout"
@@ -178,13 +275,15 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
-            <ImageView
+            <com.mikepenz.iconics.view.IconicsImageView
                 android:id="@+id/imageView"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginEnd="8dp"
-                android:background="@drawable/ic_volume"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginEnd="32dp"
                 android:backgroundTint="@color/colorPrimary"
+                app:iiv_color="@color/colorPrimary"
+                app:iiv_icon="faw-volume-up"
+                app:iiv_size="20dp"
                 app:layout_constraintEnd_toEndOf="parent" />
 
             <SeekBar
@@ -200,13 +299,15 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
                 app:layout_constraintStart_toEndOf="@+id/imageView2"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
+            <com.mikepenz.iconics.view.IconicsImageView
                 android:id="@+id/imageView2"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginStart="8dp"
-                android:background="@drawable/ic_volume"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="32dp"
                 android:backgroundTint="@color/colorPrimary"
+                app:iiv_color="@color/colorPrimary"
+                app:iiv_icon="faw-volume-off"
+                app:iiv_size="20dp"
                 app:layout_constraintStart_toStartOf="parent" />
 
 

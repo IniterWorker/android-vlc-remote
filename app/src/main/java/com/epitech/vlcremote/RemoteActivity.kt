@@ -3,6 +3,7 @@ package com.epitech.vlcremote
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
+import android.support.v4.view.LayoutInflaterCompat
 import android.support.v7.app.AppCompatActivity
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem
@@ -12,6 +13,7 @@ import com.epitech.vlcremote.fragments.PlayListFragment
 import com.epitech.vlcremote.fragments.PlayerFragment
 import com.epitech.vlcremote.models.Connection
 import com.epitech.vlcremote.services.RemoteService
+import com.mikepenz.iconics.context.IconicsLayoutInflater2
 import com.vicpin.krealmextensions.queryFirst
 import kotlinx.android.synthetic.main.activity_remote.*
 
@@ -30,6 +32,9 @@ class RemoteActivity :
     private var currentFragment: Fragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        LayoutInflaterCompat.setFactory2(layoutInflater,  IconicsLayoutInflater2(delegate))
+
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_remote)
@@ -62,14 +67,16 @@ class RemoteActivity :
 
                 remoteViewPager!!.notifyDataSetChanged()
 
+                viewPager.setCurrentItem(1, true)
+
             }
         }
     }
 
     private fun initNavigationBar() {
-        val item1 = AHBottomNavigationItem(R.string.tab_playlist, R.drawable.ic_desktop, R.color.colorInactive)
+        val item1 = AHBottomNavigationItem(R.string.tab_playlist, R.drawable.ic_playlist_play, R.color.colorInactive)
         val item2 = AHBottomNavigationItem(R.string.tab_player, R.drawable.ic_desktop, R.color.colorInactive)
-        val item3 = AHBottomNavigationItem(R.string.tab_browser, R.drawable.ic_desktop, R.color.colorInactive)
+        val item3 = AHBottomNavigationItem(R.string.tab_browser, R.drawable.ic_folder, R.color.colorInactive)
 
         bottom_navigation.addItem(item1)
         bottom_navigation.addItem(item2)
