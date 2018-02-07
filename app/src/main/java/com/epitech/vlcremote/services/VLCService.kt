@@ -48,6 +48,7 @@ interface VLCService {
     fun toggleFullscreen(
             @Header("Authorization") auth: String
     ) : Observable<Status>
+
     //
     // val -> see VLC_API.md
     //
@@ -55,6 +56,23 @@ interface VLCService {
     fun changeVolume(
             @Header("Authorization") auth: String,
             @Query("val") value: Int
+    ) : Observable<Status>
+
+    //
+    // val -> see VLC_API.md
+    //
+    @GET("requests/status.json?command=seek")
+    fun seek(
+            @Header("Authorization") auth: String,
+            @Query("val") value: String
+    ) : Observable<Status>
+    @GET("requests/status.json?command=pl_repeat")
+    fun toggleRepeat(
+            @Header("Authorization") auth: String
+    ) : Observable<Status>
+    @GET("requests/status.json?command=pl_random")
+    fun toggleRandom(
+            @Header("Authorization") auth: String
     ) : Observable<Status>
 
     //
@@ -86,15 +104,6 @@ interface VLCService {
     ) : Observable<Status>
 
     //
-    // val -> see VLC_API.md
-    //
-    @GET("requests/status.json?command=seek")
-    fun seek(
-            @Header("Authorization") auth: String,
-            @Query("val") value: String
-    ) : Observable<Status>
-
-    //
     // delay -> delay in sec
     //
     @GET("requests/status.json?command=subdelay")
@@ -118,14 +127,6 @@ interface VLCService {
     ) : Observable<Status>
     @GET("requests/status.json?command=pl_loop")
     fun toggleLoop(
-            @Header("Authorization") auth: String
-    ) : Observable<Status>
-    @GET("requests/status.json?command=pl_repeat")
-    fun toggleRepeat(
-            @Header("Authorization") auth: String
-    ) : Observable<Status>
-    @GET("requests/status.json?command=pl_random")
-    fun toggleRandom(
             @Header("Authorization") auth: String
     ) : Observable<Status>
     @GET("requests/status.json?command=pl_empty")

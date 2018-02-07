@@ -70,6 +70,8 @@ class PlayerFragment() : Fragment() {
                     // called when tracking the seekbar is stopped
                 }
             })
+            player_random.setOnClickListener { onClickRandom() }
+            player_repeat.setOnClickListener { onClickRepeat() }
         }
 
         return view
@@ -118,6 +120,20 @@ class PlayerFragment() : Fragment() {
         if (remoteService == null) return
         Toast.makeText(context, "Remote Next", Toast.LENGTH_SHORT).show()
         remoteService!!.vlcService!!.jumpNext(remoteService!!.connection!!.basicToken())
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ t: Status -> status = t }, { error -> Toast.makeText(context, "Not ok", Toast.LENGTH_SHORT).show() })
+    }
+
+    private fun onClickRandom() {
+        remoteService!!.vlcService!!.toggleRandom(remoteService!!.connection!!.basicToken())
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ t: Status -> status = t }, { error -> Toast.makeText(context, "Not ok", Toast.LENGTH_SHORT).show() })
+    }
+
+    private fun onClickRepeat() {
+        remoteService!!.vlcService!!.toggleRepeat(remoteService!!.connection!!.basicToken())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ t: Status -> status = t }, { error -> Toast.makeText(context, "Not ok", Toast.LENGTH_SHORT).show() })
