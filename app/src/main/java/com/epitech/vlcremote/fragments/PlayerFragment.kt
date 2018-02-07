@@ -3,6 +3,7 @@ package com.epitech.vlcremote.fragments
 import android.os.Bundle
 import android.support.constraint.ConstraintLayout
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,7 +20,7 @@ import kotlinx.android.synthetic.main.fragment_player.view.*
 * Created by initerworker on 31/01/18.
 */
 
-class PlayerFragment() : Fragment() {
+class PlayerFragment() : TabFragment() {
 
     var remoteService: RemoteService? = null
     private var status: Status? = null
@@ -136,5 +137,9 @@ class PlayerFragment() : Fragment() {
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ t: Status -> status = t }, { error -> Toast.makeText(context, "Not ok", Toast.LENGTH_SHORT).show() })
+    }
+
+    override fun refresh() {
+        Log.d("TabFragment", "refresh")
     }
 }

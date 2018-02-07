@@ -3,6 +3,7 @@ package com.epitech.vlcremote.fragments
 import android.os.Bundle
 import android.support.constraint.ConstraintLayout
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +15,7 @@ import com.epitech.vlcremote.services.RemoteService
 * Created by initerworker on 05/02/18.
 */
 
-class BrowserFragment() : Fragment() {
+class BrowserFragment() : TabFragment() {
 
     var remoteService: RemoteService? = null
 
@@ -37,5 +38,9 @@ class BrowserFragment() : Fragment() {
         }
 
         return view
+    }
+
+    override fun refresh() {
+        Log.d("TabFragment", "refresh")
     }
 }

@@ -1,22 +1,27 @@
 package com.epitech.vlcremote.fragments
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
+import android.widget.Toast
 import com.epitech.vlcremote.R
+import com.epitech.vlcremote.adapters.PlaylistRecyclerViewAdapter
+import com.epitech.vlcremote.models.Playlist
 import com.epitech.vlcremote.services.RemoteService
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 
 /**
 * Created by initerworker on 05/02/18.
 */
 
-class PlayListFragment : Fragment() {
+class PlayListFragment : TabFragment() {
 
     var remoteService: RemoteService? = null
+    var recyclerView: RecyclerView? = null
 
     companion object {
         fun newInstance(): PlayListFragment {
@@ -29,13 +34,28 @@ class PlayListFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        val view: RecyclerView = inflater!!.inflate(R.layout.fragment_playlist, container, false) as RecyclerView
+        recyclerView = inflater!!.inflate(R.layout.fragment_playlist, container, false) as RecyclerView
+        refresh()
+        return recyclerView as RecyclerView
+    }
 
-        // TODO: write all user interface
-        with(view) {
+    private fun handleSuccess(playlist: Playlist) {
+        Toast.makeText(context, """Success: ${playlist.children!!.size}""", Toast.LENGTH_SHORT).show()
+        recyclerView?.adapter = PlaylistRecyclerViewAdapter(playlist)
 
-        }
+    }
 
-        return view
+    private fun handleError(t: Throwable) {
+        Toast.makeText(context, "Not ok", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun refresh() {
+        Log.d("TabFragment", "refresh")
+        /*
+        remoteService!!.vlcService!!.getVLCPlaylist(remoteService!!.connection.basicToken())
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::handleSuccess, this::handleError)
+        */
     }
 }

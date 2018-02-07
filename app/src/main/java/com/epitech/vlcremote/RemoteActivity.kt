@@ -1,10 +1,10 @@
 package com.epitech.vlcremote
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import android.support.v4.view.LayoutInflaterCompat
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.widget.Toast
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem
@@ -12,6 +12,7 @@ import com.epitech.vlcremote.adapters.RemoteViewPagerAdapter
 import com.epitech.vlcremote.fragments.BrowserFragment
 import com.epitech.vlcremote.fragments.PlayListFragment
 import com.epitech.vlcremote.fragments.PlayerFragment
+import com.epitech.vlcremote.fragments.TabFragment
 import com.epitech.vlcremote.models.Connection
 import com.epitech.vlcremote.models.Status
 import com.epitech.vlcremote.services.RemoteService
@@ -38,7 +39,7 @@ class RemoteActivity :
 
     private var remoteService: RemoteService? = null
     private var remoteViewPager: RemoteViewPagerAdapter? = null
-    private var currentFragment: Fragment? = null
+    private var currentFragment: TabFragment? = null
     private var connection: Connection? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,16 +66,16 @@ class RemoteActivity :
                 try {
                     remoteService = RemoteService(connection!!)
 
-                    val playerFragment = PlayListFragment.newInstance()
-                    val playlistFragment = PlayerFragment.newInstance()
+                    val playlistFragment = PlayListFragment.newInstance()
+                    val playerFragment = PlayerFragment.newInstance()
                     val browserFragment = BrowserFragment.newInstance()
 
                     playerFragment.remoteService = remoteService
                     playlistFragment.remoteService = remoteService
                     browserFragment.remoteService = remoteService
 
-                    remoteViewPager!!.fragments.add(playerFragment)
                     remoteViewPager!!.fragments.add(playlistFragment)
+                    remoteViewPager!!.fragments.add(playerFragment)
                     remoteViewPager!!.fragments.add(browserFragment)
 
                     remoteViewPager!!.notifyDataSetChanged()
@@ -92,8 +93,9 @@ class RemoteActivity :
 
     }
 
+    // TODO: Do something more efficient (save energy bank, save process)
     private fun runUpdate() : Disposable? =  remoteService!!.vlcService!!.getVLCStatus(connection!!.basicToken())
-            .repeatWhen { t: Observable<Any> -> t.delay(2, TimeUnit.SECONDS) }
+            .repeatWhen { t: Observable<Any> -> t.delay(1, TimeUnit.SECONDS) }
             .subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ t: Status ->
@@ -101,7 +103,9 @@ class RemoteActivity :
                     player_tv_current_time.text = t.currentTimeFromated()
                     player_tv_end_time.text = t.endTimeFormated()
                 }
-            }, { error ->  })
+            }, { error ->
+                Log.d("Remote", "runUpdate")
+            })
 
     private fun initNavigationBar() {
         val item1 = AHBottomNavigationItem(R.string.tab_playlist, R.drawable.ic_playlist_play, R.color.colorInactive)
@@ -133,7 +137,7 @@ class RemoteActivity :
         }
 
         if (wasSelected) {
-            // refresh
+            currentFragment?.refresh()
             return true
         }
 
