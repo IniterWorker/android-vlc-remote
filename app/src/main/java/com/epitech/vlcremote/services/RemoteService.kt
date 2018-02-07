@@ -48,9 +48,6 @@ open class RemoteService(var connection: Connection) {
     var vlcService: VLCService? = null
         private set(vlc) { field = vlc }
 
-    var status: Status? = null
-        private set(status) { field = status }
-
     init {
         val baseUrlConnection = "http://%s:%d".format(connection.ipaddr, connection.port)
 
@@ -73,13 +70,5 @@ open class RemoteService(var connection: Connection) {
                 .build()
 
         vlcService = retrofit!!.create(VLCService::class.java)
-    }
-
-    fun runUpdateWith(connection: Connection, errorCallback:(Throwable) -> Unit) {
-        vlcService!!.getVLCStatus(connection.basicToken())
-                .repeatWhen { t: Observable<Any> -> t.delay(2, TimeUnit.SECONDS) }
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ t: Status -> status = t }, { error -> errorCallback(error) })
     }
 }

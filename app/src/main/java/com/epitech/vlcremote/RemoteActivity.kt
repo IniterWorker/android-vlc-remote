@@ -13,11 +13,18 @@ import com.epitech.vlcremote.fragments.BrowserFragment
 import com.epitech.vlcremote.fragments.PlayListFragment
 import com.epitech.vlcremote.fragments.PlayerFragment
 import com.epitech.vlcremote.models.Connection
+import com.epitech.vlcremote.models.Status
 import com.epitech.vlcremote.services.RemoteService
 import com.mikepenz.iconics.context.IconicsLayoutInflater2
 import com.vicpin.krealmextensions.queryFirst
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_remote.*
+import kotlinx.android.synthetic.main.fragment_player.*
 import java.lang.Exception
+import java.util.concurrent.TimeUnit
 
 
 /**
@@ -32,6 +39,7 @@ class RemoteActivity :
     private var remoteService: RemoteService? = null
     private var remoteViewPager: RemoteViewPagerAdapter? = null
     private var currentFragment: Fragment? = null
+    private var connection: Connection? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -51,11 +59,11 @@ class RemoteActivity :
 
         if (intent.extras != null) {
 
-            val connection: Connection? = queryFirst<Connection> { equalTo("id", intent.extras.getInt("id")) }
+            connection = queryFirst<Connection> { equalTo("id", intent.extras.getInt("id")) }
             if (connection != null) {
 
                 try {
-                    remoteService = RemoteService(connection)
+                    remoteService = RemoteService(connection!!)
 
                     val playerFragment = PlayListFragment.newInstance()
                     val playlistFragment = PlayerFragment.newInstance()
@@ -77,9 +85,22 @@ class RemoteActivity :
                     finish()
                 }
 
+                runUpdate()
             }
         }
+
     }
+
+    private fun runUpdate() : Disposable? =  remoteService!!.vlcService!!.getVLCStatus(connection!!.basicToken())
+            .repeatWhen { t: Observable<Any> -> t.delay(2, TimeUnit.SECONDS) }
+            .subscribeOn(Schedulers.newThread())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ t: Status ->
+                runOnUiThread {
+                    player_tv_current_time.text = t.currentTimeFromated()
+                    player_tv_end_time.text = t.endTimeFormated()
+                }
+            }, { error ->  })
 
     private fun initNavigationBar() {
         val item1 = AHBottomNavigationItem(R.string.tab_playlist, R.drawable.ic_playlist_play, R.color.colorInactive)
