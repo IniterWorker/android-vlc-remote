@@ -7,6 +7,7 @@ import io.reactivex.Observable
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 /**
 * Created by bonett_w on 1/29/18.
@@ -43,7 +44,24 @@ interface VLCService {
     fun jumpPrevious(
             @Header("Authorization") auth: String
     ) : Observable<Status>
+    @GET("requests/status.json?command=fullscreen")
+    fun toggleFullscreen(
+            @Header("Authorization") auth: String
+    ) : Observable<Status>
+    //
+    // val -> see VLC_API.md
+    //
+    @GET("requests/status.json?command=volume")
+    fun changeVolume(
+            @Header("Authorization") auth: String,
+            @Query("val") value: Int
+    ) : Observable<Status>
+
+    //
+    //
     /* not tested from there */
+    //
+    //
     @GET("requests/status.json?command=pl_stop")
     fun stop(
             @Header("Authorization") auth: String
@@ -52,64 +70,51 @@ interface VLCService {
     //
     // id -> id in playlist of elem to play
     //
-    @GET("requests/status.json?command=pl_play&id={id}")
+    @GET("requests/status.json?command=pl_play")
     fun playElem(
             @Header("Authorization") auth: String,
-            @Path("id") id: Int
+            @Query("id") id: Int
     ) : Observable<Status>
 
     //
-    // path -> path to the file to play
+    // path -> path to the file to play. Don't forget to begin path with "file:///"
     //
-    @GET("requests/status.json?command=in_play&input=file:///{path}")
+    @GET("requests/status.json?command=in_play")
     fun playFile(
             @Header("Authorization") auth: String,
-            @Path("path") path: String
-    ) : Observable<Status>
-    @GET("requests/status.json?command=fullscreen")
-    fun toggleFullscreen(
-            @Header("Authorization") auth: String
+            @Query("input") path: String
     ) : Observable<Status>
 
     //
     // val -> see VLC_API.md
     //
-    @GET("requests/status.json?command=seek&val={value}")
+    @GET("requests/status.json?command=seek")
     fun seek(
             @Header("Authorization") auth: String,
-            @Path("value") value: String
-    ) : Observable<Status>
-
-    //
-    // val -> see VLC_API.md
-    //
-    @GET("requests/status.json?command=volume&val={value}")
-    fun changeVolume(
-            @Header("Authorization") auth: String,
-            @Path("value") value: String
+            @Query("val") value: String
     ) : Observable<Status>
 
     //
     // delay -> delay in sec
     //
-    @GET("requests/status.json?command=subdelay&val={delay}")
+    @GET("requests/status.json?command=subdelay")
     fun changeSubdelay(
             @Header("Authorization") auth: String,
-            @Path("delay") delay: Int
+            @Query("val") delay: Int
     ) : Observable<Status>
 
     //
     // delay -> delay in sec
     //
-    @GET("requests/status.json?command=audiodelay&val={delay}")
+    @GET("requests/status.json?command=audiodelay")
     fun changeAudiodelay(
             @Header("Authorization") auth: String,
-            @Path("delay") delay: Int
+            @Query("val") delay: Int
     ) : Observable<Status>
-    @GET("requests/status.json?command=rate&val={speed}")
+    @GET("requests/status.json?command=rate")
     fun changeSpeed(
             @Header("Authorization") auth: String,
-            @Path("speed") speed: Int
+            @Query("val") speed: Int
     ) : Observable<Status>
     @GET("requests/status.json?command=pl_loop")
     fun toggleLoop(
@@ -137,48 +142,48 @@ interface VLCService {
     ) : Observable<Status>
 
     //
-    // path -> path to the file
+    // path -> path to the file. Don't forget to begin path with "file:///"
     //
-    @GET("requests/status.json?command=in_enqueue&input=file:///{path}")
+    @GET("requests/status.json?command=in_enqueue")
     fun addFilePlaylist(
             @Header("Authorization") auth: String,
-            @Path("path") path: String
+            @Query("input") path: String
     ) : Observable<Status>
 
     //
-    // path -> path to the file
+    // path -> path to the file. Don't forget to begin path with "file:///"
     //
-    @GET("requests/status.json?command=addsubtitle&val=file:///{path}")
+    @GET("requests/status.json?command=addsubtitle")
     fun addSubtitle(
             @Header("Authorization") auth: String,
-            @Path("path") path: String
+            @Query("val") path: String
     ) : Observable<Status>
 
     //
     // id -> id in playlist of elem to delete
     //
-    @GET("requests/status.json?command=pl_delete&id={id}")
+    @GET("requests/status.json?command=pl_delete")
     fun deleteElem(
             @Header("Authorization") auth: String,
-            @Path("id") id: Int
+            @Query("id") id: Int
     ) : Observable<Status>
 
     //
     // id & val -> see VLC_API.md
     //
-    @GET("requests/status.json?command=pl_sort&id={id}&val={value}")
+    @GET("requests/status.json?command=pl_sort")
     fun sortPlaylist(
             @Header("Authorization") auth: String,
-            @Path("id") id: Int,
-            @Path("value") value: Int
+            @Query("id") id: Int,
+            @Query("val") value: Int
     ) : Observable<Status>
 
     //
     // val -> ratio. see VLC_API.md for valid values
     //
-    @GET("requests/status.json?command=aspectratio&val={value}")
+    @GET("requests/status.json?command=aspectratio")
     fun changeAspectRatio(
             @Header("Authorization") auth: String,
-            @Path("value") value: String
+            @Query("val") value: String
     ) : Observable<Status>
 }

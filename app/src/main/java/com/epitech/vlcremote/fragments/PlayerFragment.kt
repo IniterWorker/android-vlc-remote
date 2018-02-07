@@ -6,12 +6,14 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SeekBar
 import android.widget.Toast
 import com.epitech.vlcremote.R
 import com.epitech.vlcremote.models.Status
 import com.epitech.vlcremote.services.RemoteService
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.fragment_player.*
 import kotlinx.android.synthetic.main.fragment_player.view.*
 
 /**
@@ -42,13 +44,36 @@ class PlayerFragment() : Fragment() {
             player_play.setOnClickListener { onClickStart() }
             player_right_arrow.setOnClickListener { onClickNext() }
             player_fullscreen.setOnClickListener { onClickFullScreen() }
+            player_volume.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+                override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+                    onChangingVolume(progress)
+                }
+
+                override fun onStartTrackingTouch(seekBar: SeekBar) {
+                    // called when tracking the seekbar is started
+                }
+
+                override fun onStopTrackingTouch(seekBar: SeekBar) {
+                    // called when tracking the seekbar is stopped
+                }
+            })
         }
 
         return view
     }
 
+    private fun onChangingVolume(progress: Int) {
+        remoteService!!.vlcService!!.changeVolume(remoteService!!.connection!!.basicToken(), progress)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ t: Status -> status = t }, { error -> Toast.makeText(context, "Not ok", Toast.LENGTH_SHORT).show() })
+    }
+
     private fun onClickFullScreen() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        remoteService!!.vlcService!!.toggleFullscreen(remoteService!!.connection!!.basicToken())
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ t: Status -> status = t }, { error -> Toast.makeText(context, "Not ok", Toast.LENGTH_SHORT).show() })
     }
 
     private fun onClickBack() {
@@ -58,7 +83,6 @@ class PlayerFragment() : Fragment() {
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ t: Status -> status = t }, { error -> Toast.makeText(context, "Not ok", Toast.LENGTH_SHORT).show() })
-        // TODO : Service back
     }
 
     private fun onClickStart() {
@@ -68,7 +92,6 @@ class PlayerFragment() : Fragment() {
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ t: Status -> status = t }, { error -> Toast.makeText(context, "Not ok", Toast.LENGTH_SHORT).show() })
-        // TODO : Service toggle Start / Stop
     }
 
     private fun onClickNext() {
@@ -78,7 +101,6 @@ class PlayerFragment() : Fragment() {
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ t: Status -> status = t }, { error -> Toast.makeText(context, "Not ok", Toast.LENGTH_SHORT).show() })
-        // TODO : Service next
     }
 
     fun updateStatus(status: Status) {
