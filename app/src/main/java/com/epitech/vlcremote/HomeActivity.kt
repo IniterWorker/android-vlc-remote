@@ -22,9 +22,10 @@ class HomeActivity :
 
     private lateinit var editFragment: ConnectionEditFragment
     private lateinit var listFragment: ConnectionListFragment
+    private var editMode: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        LayoutInflaterCompat.setFactory2(layoutInflater,  IconicsLayoutInflater2(delegate))
+        LayoutInflaterCompat.setFactory2(layoutInflater, IconicsLayoutInflater2(delegate))
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
@@ -43,11 +44,14 @@ class HomeActivity :
 
         btn_add_connection.setOnClickListener {
             btn_add_connection.hide()
+
+            editMode = true
+
             replaceFragment(editFragment, R.id.frag_home_ctn)
         }
     }
 
-    fun initDefaultDatabase() {
+    private fun initDefaultDatabase() {
         val connection = Connection()
 
         connection.autoPrimaryKey()
@@ -60,12 +64,22 @@ class HomeActivity :
         Log.d("DB", "entry number: " + Connection().count())
     }
 
+    private fun switchOnListFragment() {
+        editMode = false
+
+        btn_add_connection.show()
+
+        replaceFragment(listFragment, R.id.frag_home_ctn)
+    }
+
     override fun onEdit(connection: Connection, position: Int) {
         val instanceFragment = ConnectionEditFragment.newInstance(connection.id)
 
         instanceFragment.setOnActionBtnListener(this)
 
         btn_add_connection.hide()
+
+        editMode = true
 
         replaceFragment(instanceFragment, R.id.frag_home_ctn)
 
@@ -90,7 +104,7 @@ class HomeActivity :
     }
 
     override fun onClickEdit(connection: Connection) {
-        replaceFragment(listFragment, R.id.frag_home_ctn)
+        switchOnListFragment()
 
         btn_add_connection.show()
 
@@ -98,8 +112,16 @@ class HomeActivity :
     }
 
     override fun onErrorId(id: Int) {
-        replaceFragment(listFragment, R.id.frag_home_ctn)
+        switchOnListFragment()
 
         Toast.makeText(this, "Error ID", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onBackPressed() {
+        if (editMode) {
+            switchOnListFragment()
+        } else {
+            super.onBackPressed()
+        }
     }
 }
