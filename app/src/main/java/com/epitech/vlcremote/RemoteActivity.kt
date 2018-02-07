@@ -80,6 +80,7 @@ class RemoteActivity :
                     remoteViewPager!!.notifyDataSetChanged()
 
                     viewPager.setCurrentItem(1, true)
+                    bottom_navigation.setCurrentItem(1, false)
                 } catch (e: Exception) {
                     Toast.makeText(applicationContext, "Invalid configuration", Toast.LENGTH_LONG).show()
                     finish()
