@@ -76,10 +76,10 @@ data class Status(
         H = M / 60
         M %= 60
 
-        return "%2d:%2d:%2d".format(H, M, S)
+        return "%02d:%02d:%02d".format(H, M, S)
     }
 
-    fun currentTimeFromated() : String = formatSecondsToString(length!!)
+    fun currentTimeFromated() : String = formatSecondsToString((position!! * length!!).toInt())
 
     fun endTimeFormated() : String = formatSecondsToString(length!!)
 }
