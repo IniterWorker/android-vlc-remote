@@ -6,84 +6,94 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-<android.support.constraint.ConstraintLayout
-    android:id="@+id/remote_header"
-    android:layout_width="0dp"
-    android:layout_height="0dp"
-    android:background="@color/colorPrimaryDark"
-    app:layout_constraintTop_toTopOf="parent"
-    app:layout_constraintLeft_toLeftOf="parent"
-    app:layout_constraintRight_toRightOf="parent"
-    app:layout_constraintBottom_toTopOf="@+id/remote_frag_container"
-    android:orientation="vertical">
-
-    <com.mikepenz.iconics.view.IconicsImageButton
-        android:id="@+id/player_subtitle"
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/remote_header"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:minHeight="42dp"
-        android:minWidth="42dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:background="@null"
-        android:tint="@color/colorInactive"
-        android:scaleType="center"
-        android:scaleX="0.8"
-        android:scaleY="0.8"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:iiv_icon="faw-comment"
-        app:iiv_size="42dp"
-        app:iiv_color="@color/colorPrimary"
-        android:contentDescription="TODO"/>
+        android:layout_height="0dp"
+        android:background="@color/colorPrimaryDark"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/remote_frag_container"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <com.mikepenz.iconics.view.IconicsImageButton
-        android:id="@+id/player_fullscreen"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginStart="8dp"
-        android:background="@null"
-        android:tint="@color/colorInactive"
-        android:scaleType="center"
-        android:scaleX="0.8"
-        android:scaleY="0.8"
-        android:minHeight="42dp"
-        android:minWidth="42dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:iiv_icon="faw-desktop"
-        app:iiv_size="42dp"
-        app:iiv_color="@color/colorPrimary"
-        android:contentDescription="TODO"/>
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/ic_placeholder"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/remote_tv_quick"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="Quick Information"
-        app:layout_constraintEnd_toStartOf="@+id/player_subtitle"
-        app:layout_constraintStart_toEndOf="@+id/player_fullscreen"
-        app:layout_constraintTop_toBottomOf="@+id/remote_tv_title" />
+        <com.mikepenz.iconics.view.IconicsImageButton
+            android:id="@+id/player_subtitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@null"
+            android:contentDescription="TODO"
+            android:minHeight="42dp"
+            android:minWidth="42dp"
+            android:scaleType="center"
+            android:scaleX="0.8"
+            android:scaleY="0.8"
+            android:tint="@color/colorInactive"
+            app:iiv_color="@color/colorPrimary"
+            app:iiv_icon="faw-comment"
+            app:iiv_size="42dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
-    <TextView
-        android:id="@+id/remote_tv_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="Movie Title"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/player_subtitle"
-        app:layout_constraintStart_toEndOf="@+id/player_fullscreen"
-        app:layout_constraintTop_toTopOf="parent" />
-</android.support.constraint.ConstraintLayout>
+        <com.mikepenz.iconics.view.IconicsImageButton
+            android:id="@+id/player_fullscreen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="8dp"
+            android:background="@null"
+            android:contentDescription="TODO"
+            android:minHeight="42dp"
+            android:minWidth="42dp"
+            android:scaleType="center"
+            android:scaleX="0.8"
+            android:scaleY="0.8"
+            android:tint="@color/colorInactive"
+            app:iiv_color="@color/colorPrimary"
+            app:iiv_icon="faw-desktop"
+            app:iiv_size="42dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/remote_tv_quick"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="Quick Information"
+            app:layout_constraintEnd_toStartOf="@+id/player_subtitle"
+            app:layout_constraintStart_toEndOf="@+id/player_fullscreen"
+            app:layout_constraintTop_toBottomOf="@+id/remote_tv_title" />
+
+        <TextView
+            android:id="@+id/remote_tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="Movie Title"
+            android:textSize="30sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/player_subtitle"
+            app:layout_constraintStart_toEndOf="@+id/player_fullscreen"
+            app:layout_constraintTop_toTopOf="parent" />
+    </android.support.constraint.ConstraintLayout>
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/remote_frag_container"
