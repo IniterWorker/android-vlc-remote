@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import android.support.v4.view.LayoutInflaterCompat
 import android.support.v7.app.AppCompatActivity
+import android.widget.Toast
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem
 import com.epitech.vlcremote.adapters.RemoteViewPagerAdapter
@@ -16,6 +17,7 @@ import com.epitech.vlcremote.services.RemoteService
 import com.mikepenz.iconics.context.IconicsLayoutInflater2
 import com.vicpin.krealmextensions.queryFirst
 import kotlinx.android.synthetic.main.activity_remote.*
+import java.lang.Exception
 
 
 /**
@@ -51,25 +53,29 @@ class RemoteActivity :
 
             val connection: Connection? = queryFirst<Connection> { equalTo("id", intent.extras.getInt("id")) }
             if (connection != null) {
-                remoteService = RemoteService(connection)
 
-                val playerFragment = PlayListFragment.newInstance()
-                val playlistFragment = PlayerFragment.newInstance()
-                val browserFragment = BrowserFragment.newInstance()
+                try {
+                    remoteService = RemoteService(connection)
 
-                playerFragment.remoteService = remoteService
-                playlistFragment.remoteService = remoteService
-                browserFragment.remoteService = remoteService
+                    val playerFragment = PlayListFragment.newInstance()
+                    val playlistFragment = PlayerFragment.newInstance()
+                    val browserFragment = BrowserFragment.newInstance()
 
+                    playerFragment.remoteService = remoteService
+                    playlistFragment.remoteService = remoteService
+                    browserFragment.remoteService = remoteService
 
+                    remoteViewPager!!.fragments.add(playerFragment)
+                    remoteViewPager!!.fragments.add(playlistFragment)
+                    remoteViewPager!!.fragments.add(browserFragment)
 
-                remoteViewPager!!.fragments.add(playerFragment)
-                remoteViewPager!!.fragments.add(playlistFragment)
-                remoteViewPager!!.fragments.add(browserFragment)
+                    remoteViewPager!!.notifyDataSetChanged()
 
-                remoteViewPager!!.notifyDataSetChanged()
-
-                viewPager.setCurrentItem(1, true)
+                    viewPager.setCurrentItem(1, true)
+                } catch (e: Exception) {
+                    Toast.makeText(applicationContext, "Invalid configuration", Toast.LENGTH_LONG).show()
+                    finish()
+                }
 
             }
         }
