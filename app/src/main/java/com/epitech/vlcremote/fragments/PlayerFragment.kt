@@ -13,14 +13,13 @@ import com.epitech.vlcremote.models.Status
 import com.epitech.vlcremote.services.RemoteService
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.fragment_player.*
 import kotlinx.android.synthetic.main.fragment_player.view.*
 
 /**
 * Created by initerworker on 31/01/18.
 */
 
-class PlayerFragment() : Fragment(), SeekBar.OnSeekBarChangeListener {
+class PlayerFragment() : Fragment() {
 
     var remoteService: RemoteService? = null
     private var status: Status? = null
@@ -137,21 +136,5 @@ class PlayerFragment() : Fragment(), SeekBar.OnSeekBarChangeListener {
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ t: Status -> status = t }, { error -> Toast.makeText(context, "Not ok", Toast.LENGTH_SHORT).show() })
-    }
-
-    fun updateStatus(status: Status) {
-        // TODO : update relative DataStatus
-    }
-
-    override fun onProgressChanged(p0: SeekBar?, p1: Int, p2: Boolean) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun onStartTrackingTouch(p0: SeekBar?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun onStopTrackingTouch(p0: SeekBar?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }
