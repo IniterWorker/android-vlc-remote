@@ -57,9 +57,29 @@ class PlayerFragment() : Fragment() {
                     // called when tracking the seekbar is stopped
                 }
             })
+            player_position.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+                override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+                    onSeeking(progress)
+                }
+
+                override fun onStartTrackingTouch(seekBar: SeekBar) {
+                    // called when tracking the seekbar is started
+                }
+
+                override fun onStopTrackingTouch(seekBar: SeekBar) {
+                    // called when tracking the seekbar is stopped
+                }
+            })
         }
 
         return view
+    }
+
+    private fun onSeeking(progress: Int) {
+        remoteService!!.vlcService!!.seek(remoteService!!.connection!!.basicToken(), "$progress%")
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ t: Status -> status = t }, { error -> Toast.makeText(context, "Not ok", Toast.LENGTH_SHORT).show() })
     }
 
     private fun onChangingVolume(progress: Int) {
