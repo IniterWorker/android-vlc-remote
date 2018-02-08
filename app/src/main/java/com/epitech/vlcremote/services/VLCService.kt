@@ -2,6 +2,7 @@ package com.epitech.vlcremote.services
 
 import com.epitech.vlcremote.models.Browse
 import com.epitech.vlcremote.models.Playlist
+import com.epitech.vlcremote.models.PlaylistRoot
 import com.epitech.vlcremote.models.Status
 import io.reactivex.Observable
 import retrofit2.http.GET
@@ -24,7 +25,7 @@ interface VLCService {
     /* not tested from there */
     fun getVLCPlaylist(
             @Header("Authorization") auth: String
-    ) : Observable<Playlist>
+    ) : Observable<PlaylistRoot>
     @GET("requests/browse.json?uri=file:///{path}")
     fun getVLCBrowse(
             @Header("Authorization") auth: String,

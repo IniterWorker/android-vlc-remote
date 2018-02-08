@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName
 data class Playlist(
 
 	@field:SerializedName("children")
-	val children: List<Playlist?>? = null,
+	val children: List<PlaylistItem?>? = null,
 
 	@field:SerializedName("name")
 	val name: String? = null,
