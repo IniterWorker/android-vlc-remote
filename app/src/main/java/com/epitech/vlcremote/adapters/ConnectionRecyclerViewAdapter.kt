@@ -8,7 +8,6 @@ import android.widget.RelativeLayout
 import com.epitech.vlcremote.R
 import com.epitech.vlcremote.models.Connection
 import com.vicpin.krealmextensions.queryAll
-import io.realm.RealmChangeListener
 import kotlinx.android.synthetic.main.itemlist_connection.view.*
 
 /**
