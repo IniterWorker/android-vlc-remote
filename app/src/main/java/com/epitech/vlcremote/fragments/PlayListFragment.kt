@@ -1,6 +1,7 @@
 package com.epitech.vlcremote.fragments
 
 import android.os.Bundle
+import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -14,6 +15,7 @@ import com.epitech.vlcremote.models.PlaylistRoot
 import com.epitech.vlcremote.services.RemoteService
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.fragment_playlist.view.*
 
 /**
 * Created by initerworker on 05/02/18.
@@ -21,8 +23,9 @@ import io.reactivex.schedulers.Schedulers
 
 class PlayListFragment : TabFragment() {
 
+    lateinit var swipeRefreshLayout: SwipeRefreshLayout
+    lateinit var recyclerView: RecyclerView
     var remoteService: RemoteService? = null
-    var recyclerView: RecyclerView? = null
 
     companion object {
         fun newInstance(): PlayListFragment {
@@ -35,15 +38,21 @@ class PlayListFragment : TabFragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        recyclerView = inflater!!.inflate(R.layout.fragment_playlist, container, false) as RecyclerView
-        recyclerView?.layoutManager = LinearLayoutManager(context)
+        // swiper
+        swipeRefreshLayout = inflater!!.inflate(R.layout.fragment_playlist, container, false) as SwipeRefreshLayout
+        swipeRefreshLayout.setOnRefreshListener {
+            refresh()
+        }
+        // recycler
+        recyclerView = swipeRefreshLayout.itemlist_recycler
+        recyclerView.layoutManager = LinearLayoutManager(context)
         refresh()
-        return recyclerView as RecyclerView
+        return swipeRefreshLayout
     }
 
     private fun handleSuccess(playlist: PlaylistRoot) {
-        recyclerView?.adapter = PlaylistRecyclerViewAdapter(playlist.children!![0]!!, this::handleClickItem)
-        recyclerView?.adapter?.notifyDataSetChanged()
+        recyclerView.adapter = PlaylistRecyclerViewAdapter(playlist.children!![0]!!, this::handleClickItem)
+        recyclerView.adapter?.notifyDataSetChanged()
     }
 
     private fun handleError(t: Throwable) {
@@ -52,17 +61,17 @@ class PlayListFragment : TabFragment() {
 
     private fun handleClickItem(item: PlaylistItem) {
         remoteService?.vlcService!!.playElem(remoteService!!.connection.basicToken(), item.id.toInt())
+                .doOnDispose { swipeRefreshLayout.isRefreshing = true }
+                .doOnComplete { swipeRefreshLayout.isRefreshing = false }
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    refresh()
-                }, {
-
-                })
+                .subscribe({ refresh() }, this::handleError)
     }
 
     override fun refresh() {
-        remoteService?.vlcService!!.getVLCPlaylist(remoteService!!.connection.basicToken())
+        remoteService!!.vlcService!!.getVLCPlaylist(remoteService!!.connection.basicToken())
+                .doOnDispose { swipeRefreshLayout.isRefreshing = true }
+                .doOnComplete { swipeRefreshLayout.isRefreshing = false }
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::handleSuccess, this::handleError)
