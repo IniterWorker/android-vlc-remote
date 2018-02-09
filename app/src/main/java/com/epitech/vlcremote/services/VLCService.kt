@@ -26,10 +26,10 @@ interface VLCService {
     fun getVLCPlaylist(
             @Header("Authorization") auth: String
     ) : Observable<PlaylistRoot>
-    @GET("requests/browse.json?uri=file:///{path}")
+    @GET("requests/browse.json")
     fun getVLCBrowse(
             @Header("Authorization") auth: String,
-            @Path("path") path: String
+            @Query("uri") path: String
     ) : Observable<Browse>
 
     /* do remote command */

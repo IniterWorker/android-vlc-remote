@@ -68,8 +68,9 @@ class PlayListFragment : TabFragment() {
                 .subscribe({ refresh() }, this::handleError)
     }
 
+    // TODO: make something more safe and efficient
     override fun refresh() {
-        remoteService!!.vlcService!!.getVLCPlaylist(remoteService!!.connection.basicToken())
+        remoteService?.vlcService!!.getVLCPlaylist(remoteService!!.connection.basicToken())
                 .doOnDispose { swipeRefreshLayout.isRefreshing = true }
                 .doOnComplete { swipeRefreshLayout.isRefreshing = false }
                 .subscribeOn(Schedulers.newThread())
