@@ -162,6 +162,28 @@
             app:iiv_color="@color/colorInactive"/>
 
         <com.mikepenz.iconics.view.IconicsImageButton
+            android:id="@+id/player_stop"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:adjustViewBounds="false"
+            android:background="@null"
+            android:cropToPadding="false"
+            android:elevation="0dp"
+            android:padding="0dp"
+            android:scaleType="fitXY"
+            android:tint="@color/colorInactive"
+            app:iiv_color="@color/colorInactive"
+            app:iiv_icon="faw-stop"
+            app:iiv_size="40dp"
+            app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
+            app:layout_constraintEnd_toStartOf="@+id/player_repeat"
+            app:layout_constraintStart_toEndOf="@+id/player_random"
+            app:layout_constraintTop_toTopOf="@+id/player_repeat" />
+
+        <com.mikepenz.iconics.view.IconicsImageButton
             android:id="@+id/player_left_arrow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
