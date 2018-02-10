@@ -22,8 +22,9 @@ import kotlinx.android.synthetic.main.fragment_player.view.*
 
 class PlayerFragment() : TabFragment() {
 
-    var remoteService: RemoteService? = null
     private var status: Status? = null
+    private val TAG: String = "PlayerFragment"
+    var remoteService: RemoteService? = null
 
     companion object {
         fun newInstance(): PlayerFragment {
@@ -140,6 +141,6 @@ class PlayerFragment() : TabFragment() {
     }
 
     override fun refresh() {
-        Log.d("TabFragment", "refresh")
+        Log.d(TAG, "start refresh...")
     }
 }

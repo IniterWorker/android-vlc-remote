@@ -30,7 +30,8 @@ class HomeActivity :
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
-        initDefaultDatabase()
+        if (BuildConfig.DEBUG)
+            initDefaultDatabase()
 
         // declare list fragment
         listFragment = ConnectionListFragment()
@@ -56,7 +57,7 @@ class HomeActivity :
 
         connection.autoPrimaryKey()
         connection.name = "Nom de ma connection"
-        connection.ipaddr = "192.168.1.44"
+        connection.ipaddr = "192.168.1.36"
         connection.port = 8080
         connection.setBasicAuth("", "toto")
         connection.save()

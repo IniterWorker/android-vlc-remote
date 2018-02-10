@@ -29,6 +29,7 @@ class ConnectionListFragment : Fragment(), CustomRecyclerItemTouchHelperListener
     private lateinit var recyclerView: RecyclerView
     private var mListener: OnEventListListener? = null
 
+    private val TAG: String = "ConnectionListFragment"
 
     /**
      * Delete swipe

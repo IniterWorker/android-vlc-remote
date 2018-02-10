@@ -4,10 +4,10 @@ import android.os.Bundle
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import com.epitech.vlcremote.R
 import com.epitech.vlcremote.adapters.BrowserRecyclerViewAdapter
 import com.epitech.vlcremote.models.Browse
@@ -25,8 +25,11 @@ class BrowserFragment : TabFragment() {
 
     lateinit var swipeRefreshLayout: SwipeRefreshLayout
     lateinit var recyclerView: RecyclerView
+
+    private val TAG: String = "BrowserFragment"
+    private var currentPath: String = "file:///"
+
     var remoteService: RemoteService? = null
-    var currentPath: String = "/"
 
     companion object {
         fun newInstance(): BrowserFragment {
@@ -52,23 +55,26 @@ class BrowserFragment : TabFragment() {
     }
 
     private fun handleSuccess(browse: Browse) {
-        Toast.makeText(context, "Browse count = ${browse.element.count()}", Toast.LENGTH_SHORT).show()
+        Log.d(TAG, "Browse count elements: ${browse.element.count()}")
         recyclerView.adapter = BrowserRecyclerViewAdapter(browse, this::handleClickItem)
         recyclerView.adapter?.notifyDataSetChanged()
     }
 
     private fun handleError(t: Throwable) {
-        Toast.makeText(context, "Not ok", Toast.LENGTH_SHORT).show()
+        Log.e(TAG, t.message)
     }
 
     private fun handleClickItem(item: ElementItem) {
-        currentPath = item.uri
+        currentPath = item.uri!!
         refresh()
     }
 
     override fun refresh() {
-        remoteService!!.vlcService!!.getVLCBrowse(remoteService!!.connection.basicToken(), "file://$currentPath")
-                .doOnDispose { swipeRefreshLayout.isRefreshing = true }
+        Log.d(TAG, "Start refresh...")
+        remoteService!!.vlcService!!.getVLCBrowse(remoteService!!.connection.basicToken(), currentPath)
+                .doOnDispose {
+                    swipeRefreshLayout.isRefreshing = true
+                }
                 .doOnComplete {
                     swipeRefreshLayout.isRefreshing = false
                 }

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,6 +26,7 @@ class PlayListFragment : TabFragment() {
 
     lateinit var swipeRefreshLayout: SwipeRefreshLayout
     lateinit var recyclerView: RecyclerView
+    private val TAG: String = "PlayListFragment"
     var remoteService: RemoteService? = null
 
     companion object {
@@ -56,7 +58,7 @@ class PlayListFragment : TabFragment() {
     }
 
     private fun handleError(t: Throwable) {
-        Toast.makeText(context, "Not ok", Toast.LENGTH_SHORT).show()
+        Log.e(TAG, t.message)
     }
 
     private fun handleClickItem(item: PlaylistItem) {
@@ -70,6 +72,7 @@ class PlayListFragment : TabFragment() {
 
     // TODO: make something more safe and efficient
     override fun refresh() {
+        Log.d(TAG, "start refresh...")
         remoteService?.vlcService!!.getVLCPlaylist(remoteService!!.connection.basicToken())
                 .doOnDispose { swipeRefreshLayout.isRefreshing = true }
                 .doOnComplete { swipeRefreshLayout.isRefreshing = false }

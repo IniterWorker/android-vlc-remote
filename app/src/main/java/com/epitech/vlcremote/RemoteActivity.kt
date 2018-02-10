@@ -64,6 +64,7 @@ class RemoteActivity :
             if (connection != null) {
 
                 try {
+                    // TODO: make something more clean and efficient
                     remoteService = RemoteService(connection!!)
 
                     val playlistFragment = PlayListFragment.newInstance()

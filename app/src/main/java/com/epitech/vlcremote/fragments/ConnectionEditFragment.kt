@@ -19,9 +19,10 @@ import kotlinx.android.synthetic.main.fragment_edit_connection.view.*
 
 class ConnectionEditFragment : Fragment() {
 
+    private val TAG: String = "ConnectionEditFragment"
+
     private var mId: Int = 0
     private var mConnection: Connection? = null
-
     private var mListener: OnActionBtnListener? = null
 
     companion object {
@@ -46,7 +47,7 @@ class ConnectionEditFragment : Fragment() {
         if (bundle != null) {
             mId = bundle.getInt("id")
 
-            Log.e("BundleID::", mId.toString())
+            Log.e(TAG, "Connection id selected: $mId")
 
             if (mId >= 0) {
 

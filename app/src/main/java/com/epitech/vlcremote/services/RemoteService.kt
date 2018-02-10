@@ -20,10 +20,12 @@ import com.google.gson.Gson
 
 
 /**
- * Created by initerworker on 02/02/18.
- */
+* Created by initerworker on 02/02/18.
+*/
 open class RemoteService(var connection: Connection) {
-    private val gson: Gson
+    var gson: Gson
+    var retrofit: Retrofit
+    var vlcService: VLCService
 
     init {
         val b = GsonBuilder().setExclusionStrategies(object : ExclusionStrategy {
@@ -40,28 +42,18 @@ open class RemoteService(var connection: Connection) {
         b.registerTypeAdapter(Boolean::class.java, serializer)
         b.registerTypeAdapter(Boolean::class.javaPrimitiveType, serializer)
         gson = b.create()!!
-    }
 
-
-    private var retrofit: Retrofit? = null
-
-    var vlcService: VLCService? = null
-        private set(vlc) { field = vlc }
-
-    init {
         val baseUrlConnection = "http://%s:%d".format(connection.ipaddr, connection.port)
 
         val interceptor = HttpLoggingInterceptor()
         interceptor.level = HttpLoggingInterceptor.Level.HEADERS
         interceptor.level = HttpLoggingInterceptor.Level.BODY
 
-        // TODO : remove and clean
         // DEBUG Interceptor
         val client = OkHttpClient.Builder()
                 .addInterceptor(interceptor)
                 .build()
 
-        // TODO : make custom retrofit builder
         retrofit = Retrofit.Builder()
                 .client(client)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
@@ -69,6 +61,6 @@ open class RemoteService(var connection: Connection) {
                 .baseUrl(baseUrlConnection)
                 .build()
 
-        vlcService = retrofit!!.create(VLCService::class.java)
+        vlcService = retrofit.create(VLCService::class.java)
     }
 }

@@ -18,10 +18,18 @@ abstract class RealmActivity : AppCompatActivity() {
         // init Realm.io
         Realm.init(this)
 
-        val realmConfiguration = RealmConfiguration.Builder().name("user-db").schemaVersion(1).deleteRealmIfMigrationNeeded().build()
+        val realmConfiguration = RealmConfiguration.Builder()
+                .name("user-db")
+                .schemaVersion(1)
+                .deleteRealmIfMigrationNeeded()
+                .build()
 
         // clear previous data for fresh start
-        Realm.deleteRealm(Realm.getDefaultConfiguration())
-        Realm.deleteRealm(realmConfiguration)
+        if (BuildConfig.DEBUG) {
+            Realm.deleteRealm(Realm.getDefaultConfiguration())
+            Realm.deleteRealm(realmConfiguration)
+        } else {
+            Realm.setDefaultConfiguration(realmConfiguration)
+        }
     }
 }
