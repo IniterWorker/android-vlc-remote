@@ -96,13 +96,20 @@ class RemoteActivity :
 
     // TODO: Do something more efficient (save energy bank, save process)
     private fun runUpdate() : Disposable? =  remoteService!!.vlcService!!.getVLCStatus(connection!!.basicToken())
-            .repeatWhen { t: Observable<Any> -> t.delay(1, TimeUnit.SECONDS) }
+            .repeatWhen { t: Observable<Any> -> t.delay(750, TimeUnit.MILLISECONDS) }
             .subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ t: Status ->
                 runOnUiThread {
                     player_tv_current_time.text = t.currentTimeFromated()
                     player_tv_end_time.text = t.endTimeFormated()
+                    if (t.information!!.category!!.meta!!.title == null )
+                        remote_tv_title.text = t.information!!.category!!.meta!!.filename;
+                    else
+                        remote_tv_title.text = t.information!!.category!!.meta!!.title;
+                    remote_tv_quick.text = "";
+                    if (t.information!!.category!!.meta!!.artist != null )
+                        remote_tv_quick.text = t.information!!.category!!.meta!!.artist;
                 }
             }, { error ->
                 Log.d("Remote", "runUpdate")

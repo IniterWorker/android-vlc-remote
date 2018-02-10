@@ -13,5 +13,11 @@ data class Meta(
 	val description: String? = null,
 
 	@field:SerializedName("comment")
-	val comment: String? = null
+	val comment: String? = null,
+
+	@field:SerializedName("artist")
+	val artist: String? = null,
+
+	@field:SerializedName("title")
+	val title: String? = null
 )
