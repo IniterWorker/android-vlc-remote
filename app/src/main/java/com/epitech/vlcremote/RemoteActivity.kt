@@ -110,6 +110,7 @@ class RemoteActivity :
                     remote_tv_quick.text = "";
                     if (t.information!!.category!!.meta!!.artist != null )
                         remote_tv_quick.text = t.information!!.category!!.meta!!.artist;
+                    player_position.setProgress((t.position!! * 100).toInt());
                 }
             }, { error ->
                 Log.d("Remote", "runUpdate")
