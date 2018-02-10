@@ -73,6 +73,7 @@ class PlayerFragment() : TabFragment() {
             })
             player_random.setOnClickListener { onClickRandom() }
             player_repeat.setOnClickListener { onClickRepeat() }
+            player_stop.setOnClickListener { onClickStop() }
         }
 
         return view
@@ -87,6 +88,13 @@ class PlayerFragment() : TabFragment() {
 
     private fun onChangingVolume(progress: Int) {
         remoteService!!.vlcService!!.changeVolume(remoteService!!.connection!!.basicToken(), progress)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ t: Status -> status = t }, { error -> Toast.makeText(context, "Not ok", Toast.LENGTH_SHORT).show() })
+    }
+
+    private fun onClickStop() {
+        remoteService!!.vlcService!!.stop(remoteService!!.connection!!.basicToken())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ t: Status -> status = t }, { error -> Toast.makeText(context, "Not ok", Toast.LENGTH_SHORT).show() })
