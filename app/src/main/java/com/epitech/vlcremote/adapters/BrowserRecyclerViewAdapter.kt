@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import com.epitech.vlcremote.R
 import com.epitech.vlcremote.models.Browse
 import com.epitech.vlcremote.models.ElementItem
+import com.mikepenz.fontawesome_typeface_library.FontAwesome
+import com.mikepenz.iconics.IconicsDrawable
 import kotlinx.android.synthetic.main.itemlist_file.view.*
 
 /**
@@ -29,6 +31,13 @@ class BrowserRecyclerViewAdapter(val browse: Browse, val listener: (ElementItem)
     class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bindValue(item: ElementItem, listener: (ElementItem) -> Unit) = with(itemView) {
             itemlist_name.text = item.name
+
+            if (item.type!!.contains("dir")) {
+                itemlist_icon.icon = IconicsDrawable(itemView.context, FontAwesome.Icon.faw_folder)
+            } else {
+                itemlist_icon.icon = IconicsDrawable(itemView.context, FontAwesome.Icon.faw_file)
+            }
+
             setOnClickListener {
                 listener(item)
             }

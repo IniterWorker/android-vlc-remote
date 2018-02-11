@@ -63,10 +63,10 @@
         android:layout_width="match_parent">
         <com.mikepenz.iconics.view.IconicsImageView
             android:id="@+id/itemlist_icon"
-            android:layout_margin="10dp"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            app:iiv_size="30dp"
+            android:layout_margin="20dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:iiv_size="28dp"
             app:iiv_icon="faw-file-video"
             app:iiv_color="@color/colorPrimaryDark" />
 
