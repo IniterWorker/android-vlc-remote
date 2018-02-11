@@ -57,7 +57,7 @@ class HomeActivity :
 
         connection.autoPrimaryKey()
         connection.name = "Nom de ma connection"
-        connection.ipaddr = "192.168.1.36"
+        connection.ipaddr = "192.168.1.44"
         connection.port = 8080
         connection.setBasicAuth("", "toto")
         connection.save()

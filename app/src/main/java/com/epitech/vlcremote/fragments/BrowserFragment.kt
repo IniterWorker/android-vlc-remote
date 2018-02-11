@@ -71,7 +71,7 @@ class BrowserFragment : TabFragment() {
 
     override fun refresh() {
         Log.d(TAG, "Start refresh...")
-        remoteService!!.vlcService!!.getVLCBrowse(remoteService!!.connection.basicToken(), currentPath)
+        remoteService?.vlcService!!.getVLCBrowse(remoteService!!.connection.basicToken(), currentPath)
                 .doOnDispose {
                     swipeRefreshLayout.isRefreshing = true
                 }
