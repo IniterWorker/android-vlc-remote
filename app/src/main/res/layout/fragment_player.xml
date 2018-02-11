@@ -148,31 +148,32 @@
             android:layout_marginBottom="24dp"
             android:layout_marginEnd="24dp"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="24dp"
-            android:padding="20dp"
+            android:layout_marginTop="8dp"
             android:adjustViewBounds="false"
             android:background="@null"
             android:cropToPadding="false"
             android:elevation="0dp"
+            android:padding="20dp"
             android:scaleType="fitXY"
             android:tint="@color/colorInactive"
+            app:iiv_color="@color/colorInactive"
+            app:iiv_icon="faw-play"
             app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
             app:layout_constraintEnd_toStartOf="@+id/player_right_arrow"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/player_left_arrow"
-            app:layout_constraintTop_toBottomOf="@+id/player_position"
-            app:iiv_icon="faw-play"
-            app:iiv_color="@color/colorInactive"/>
+            app:layout_constraintTop_toBottomOf="@+id/player_position" />
 
         <com.mikepenz.iconics.view.IconicsImageButton
             android:id="@+id/player_stop"
-            android:layout_width="0dp"
-            android:layout_height="30dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:adjustViewBounds="false"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="10dp"
             android:background="@null"
+            android:minHeight="20dp"
+            android:minWidth="20dp"
+            android:adjustViewBounds="false"
             android:cropToPadding="false"
             android:elevation="0dp"
             android:padding="0dp"
@@ -180,55 +181,48 @@
             android:tint="@color/colorInactive"
             app:iiv_color="@color/colorInactive"
             app:iiv_icon="faw-stop"
-            app:iiv_size="40dp"
-            app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
-            app:layout_constraintEnd_toStartOf="@+id/player_repeat"
-            app:layout_constraintStart_toEndOf="@+id/player_random"
-            app:layout_constraintTop_toTopOf="@+id/player_repeat" />
+            app:iiv_size="32dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/player_random" />
 
         <com.mikepenz.iconics.view.IconicsImageButton
             android:id="@+id/player_left_arrow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="10dp"
+            android:background="@null"
             android:minHeight="20dp"
             android:minWidth="20dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="8dp"
-            android:background="@null"
             android:tint="@color/colorInactive"
-            app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/player_tv_current_time"
+            app:iiv_color="@color/colorInactive"
             app:iiv_icon="faw-fast-backward"
             app:iiv_size="42dp"
-            app:iiv_color="@color/colorInactive" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/player_tv_current_time" />
 
         <com.mikepenz.iconics.view.IconicsImageButton
             android:id="@+id/player_right_arrow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            android:layout_marginTop="10dp"
+            android:background="@null"
             android:minHeight="20dp"
             android:minWidth="20dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="32dp"
-            android:layout_marginTop="8dp"
-            android:background="@null"
             android:tint="@color/colorInactive"
-            app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/player_tv_end_time"
+            app:iiv_color="@color/colorInactive"
             app:iiv_icon="faw-fast-forward"
             app:iiv_size="42dp"
-            app:iiv_color="@color/colorInactive" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/player_tv_end_time" />
 
         <com.mikepenz.iconics.view.IconicsImageButton
             android:id="@+id/player_left_arrow_low"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="24dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginTop="10dp"
             android:background="@null"
             android:minHeight="20dp"
             android:minWidth="20dp"
@@ -236,17 +230,15 @@
             app:iiv_color="@color/colorInactive"
             app:iiv_icon="faw-forward"
             app:iiv_size="32dp"
-            app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
-            app:layout_constraintEnd_toStartOf="@+id/player_right_arrow"
-            app:layout_constraintTop_toTopOf="@+id/player_play" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/player_right_arrow" />
 
         <com.mikepenz.iconics.view.IconicsImageButton
             android:id="@+id/player_right_arrow_low"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="10dp"
             android:background="@null"
             android:minHeight="20dp"
             android:minWidth="20dp"
@@ -254,18 +246,15 @@
             app:iiv_color="@color/colorInactive"
             app:iiv_icon="faw-backward"
             app:iiv_size="32dp"
-            app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
-            app:layout_constraintStart_toEndOf="@+id/player_left_arrow"
-            app:layout_constraintTop_toTopOf="@+id/player_play" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/player_left_arrow" />
 
         <com.mikepenz.iconics.view.IconicsImageButton
             android:id="@+id/player_repeat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginTop="10dp"
             android:background="@null"
             android:minHeight="20dp"
             android:minWidth="20dp"
@@ -273,19 +262,32 @@
             app:iiv_color="@color/colorInactive"
             app:iiv_icon="faw-redo"
             app:iiv_size="32dp"
-            app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
-            app:layout_constraintEnd_toStartOf="@+id/player_right_arrow"
-            app:layout_constraintStart_toEndOf="@+id/player_play"
-            app:layout_constraintTop_toTopOf="@+id/player_left_arrow_low" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/player_left_arrow_low" />
+
+
+        <com.mikepenz.iconics.view.IconicsImageButton
+            android:id="@+id/player_retweet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            android:layout_marginTop="10dp"
+            android:background="@null"
+            android:minHeight="20dp"
+            android:minWidth="20dp"
+            android:tint="@color/colorInactive"
+            app:iiv_color="@color/colorInactive"
+            app:iiv_icon="faw-retweet"
+            app:iiv_size="32dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/player_repeat" />
 
         <com.mikepenz.iconics.view.IconicsImageButton
             android:id="@+id/player_random"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="10dp"
             android:background="@null"
             android:minHeight="20dp"
             android:minWidth="20dp"
@@ -293,10 +295,8 @@
             app:iiv_color="@color/colorInactive"
             app:iiv_icon="faw-random"
             app:iiv_size="32dp"
-            app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
-            app:layout_constraintEnd_toStartOf="@+id/player_right_arrow_low"
-            app:layout_constraintStart_toEndOf="@+id/player_left_arrow"
-            app:layout_constraintTop_toTopOf="@+id/player_right_arrow_low" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/player_right_arrow_low" />
 
 
         <android.support.constraint.ConstraintLayout
