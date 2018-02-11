@@ -81,32 +81,40 @@ class PlayerFragment() : TabFragment() {
         return view
     }
 
+    private fun handleError(error: Throwable) {
+        Toast.makeText(context, "Not ok", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun handleSuccess(status: Status) {
+        this.status = status
+    }
+
     private fun onSeeking(progress: Int) {
         remoteService!!.vlcService!!.seek(remoteService!!.connection!!.basicToken(), "$progress%")
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ t: Status -> status = t }, { error -> Toast.makeText(context, "Not ok", Toast.LENGTH_SHORT).show() })
+                .subscribe(this::handleSuccess, this::handleError)
     }
 
     private fun onChangingVolume(progress: Int) {
         remoteService!!.vlcService!!.changeVolume(remoteService!!.connection!!.basicToken(), progress)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ t: Status -> status = t }, { error -> Toast.makeText(context, "Not ok", Toast.LENGTH_SHORT).show() })
+                .subscribe(this::handleSuccess, this::handleError)
     }
 
     private fun onClickStop() {
         remoteService!!.vlcService!!.stop(remoteService!!.connection!!.basicToken())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ t: Status -> status = t }, { error -> Toast.makeText(context, "Not ok", Toast.LENGTH_SHORT).show() })
+                .subscribe(this::handleSuccess, this::handleError)
     }
 
     private fun onClickFullScreen() {
         remoteService!!.vlcService!!.toggleFullscreen(remoteService!!.connection!!.basicToken())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ t: Status -> status = t }, { error -> Toast.makeText(context, "Not ok", Toast.LENGTH_SHORT).show() })
+                .subscribe(this::handleSuccess, this::handleError)
     }
 
     private fun onClickBack() {
@@ -115,7 +123,7 @@ class PlayerFragment() : TabFragment() {
         remoteService!!.vlcService!!.jumpPrevious(remoteService!!.connection!!.basicToken())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ t: Status -> status = t }, { error -> Toast.makeText(context, "Not ok", Toast.LENGTH_SHORT).show() })
+                .subscribe(this::handleSuccess, this::handleError)
     }
 
     private fun onClickStart() {
@@ -124,7 +132,7 @@ class PlayerFragment() : TabFragment() {
         remoteService!!.vlcService!!.togglePlayPause(remoteService!!.connection!!.basicToken())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ t: Status -> status = t }, { error -> Toast.makeText(context, "Not ok", Toast.LENGTH_SHORT).show() })
+                .subscribe(this::handleSuccess, this::handleError)
     }
 
     private fun onClickNext() {
@@ -133,21 +141,21 @@ class PlayerFragment() : TabFragment() {
         remoteService!!.vlcService!!.jumpNext(remoteService!!.connection!!.basicToken())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ t: Status -> status = t }, { error -> Toast.makeText(context, "Not ok", Toast.LENGTH_SHORT).show() })
+                .subscribe(this::handleSuccess, this::handleError)
     }
 
     private fun onClickRandom() {
         remoteService!!.vlcService!!.toggleRandom(remoteService!!.connection!!.basicToken())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ t: Status -> status = t }, { error -> Toast.makeText(context, "Not ok", Toast.LENGTH_SHORT).show() })
+                .subscribe(this::handleSuccess, this::handleError)
     }
 
     private fun onClickRepeat() {
         remoteService!!.vlcService!!.toggleRepeat(remoteService!!.connection!!.basicToken())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ t: Status -> status = t }, { error -> Toast.makeText(context, "Not ok", Toast.LENGTH_SHORT).show() })
+                .subscribe(this::handleSuccess, this::handleError)
     }
 
     override fun refresh() {
