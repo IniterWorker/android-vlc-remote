@@ -76,6 +76,7 @@ class PlayerFragment() : TabFragment() {
             player_random.setOnClickListener { onClickRandom() }
             player_repeat.setOnClickListener { onClickRepeat() }
             player_stop.setOnClickListener { onClickStop() }
+            player_retweet.setOnClickListener { onClickLoop() }
         }
 
         return view
@@ -153,6 +154,13 @@ class PlayerFragment() : TabFragment() {
 
     private fun onClickRepeat() {
         remoteService!!.vlcService!!.toggleRepeat(remoteService!!.connection!!.basicToken())
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::handleSuccess, this::handleError)
+    }
+
+    private fun onClickLoop() {
+        remoteService!!.vlcService!!.toggleLoop(remoteService!!.connection!!.basicToken())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::handleSuccess, this::handleError)
