@@ -47,7 +47,8 @@ class PlayerFragment() : TabFragment() {
             player_fullscreen.setOnClickListener { onClickFullScreen() }
             player_volume.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
                 override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-                    onChangingVolume(progress)
+                    if (fromUser)
+                        onChangingVolume(progress)
                 }
 
                 override fun onStartTrackingTouch(seekBar: SeekBar) {
@@ -60,7 +61,8 @@ class PlayerFragment() : TabFragment() {
             })
             player_position.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
                 override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-                    onSeeking(progress)
+                    if (fromUser)
+                        onSeeking(progress)
                 }
 
                 override fun onStartTrackingTouch(seekBar: SeekBar) {

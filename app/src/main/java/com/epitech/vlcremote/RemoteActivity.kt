@@ -111,6 +111,10 @@ class RemoteActivity :
                     if (t.information!!.category!!.meta!!.artist != null )
                         remote_tv_quick.text = t.information!!.category!!.meta!!.artist;
                     player_position.setProgress((t.position!! * 100).toInt());
+                    var volume: Int = (t.volume!! ).toInt();
+                    if (volume > player_volume.max)
+                        volume = player_volume.max;
+                    player_volume.setProgress(volume);
                 }
             }, { error ->
                 Log.d("Remote", "runUpdate")
