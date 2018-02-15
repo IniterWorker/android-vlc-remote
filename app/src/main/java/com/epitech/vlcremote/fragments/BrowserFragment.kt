@@ -65,8 +65,25 @@ class BrowserFragment : TabFragment() {
     }
 
     private fun handleClickItem(item: ElementItem) {
-        currentPath = item.uri!!
-        refresh()
+        if (item.type!!.contains("dir")) {
+            currentPath = item.uri!!
+            refresh()
+        }
+        else {
+            // TODO: make somethings more serious
+            remoteService!!.vlcService.playFile(remoteService!!.connection.basicToken(), item.uri!!)
+                    .doOnDispose {
+                        swipeRefreshLayout.isRefreshing = true
+                    }
+                    .doOnComplete {
+                        swipeRefreshLayout.isRefreshing = false
+                    }
+                    .subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({
+
+                    }, this::handleError)
+        }
     }
 
     override fun refresh() {

@@ -156,6 +156,13 @@ class PlayerFragment() : TabFragment(), RemoteControllerView.OnRemoteControllerA
                 .subscribe(this::handleSuccess, this::handleError)
     }
 
+    private fun onClickLoop() {
+        remoteService!!.vlcService!!.toggleLoop(remoteService!!.connection!!.basicToken())
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::handleSuccess, this::handleError)
+    }
+
     override fun refresh() {
         Log.d(TAG, "start refresh...")
     }
