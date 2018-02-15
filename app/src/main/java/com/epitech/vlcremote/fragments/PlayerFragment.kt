@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SeekBar
 import android.widget.Toast
 import com.epitech.vlcremote.R
 import com.epitech.vlcremote.models.Status
@@ -24,6 +25,7 @@ import java.util.concurrent.TimeUnit
 */
 
 class PlayerFragment() : TabFragment(), RemoteControllerView.OnRemoteControllerActionListener {
+
 
     private var status: Status? = null
     private val TAG: String = "PlayerFragment"
@@ -60,7 +62,6 @@ class PlayerFragment() : TabFragment(), RemoteControllerView.OnRemoteControllerA
                 }, { error ->
                     Log.d(TAG, "errorUpdate")
                 })
-
 
         return view
     }
@@ -157,5 +158,17 @@ class PlayerFragment() : TabFragment(), RemoteControllerView.OnRemoteControllerA
 
     override fun refresh() {
         Log.d(TAG, "start refresh...")
+    }
+
+    override fun onProgressChanged(p0: SeekBar?, p1: Int, p2: Boolean) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onStartTrackingTouch(p0: SeekBar?) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onStopTrackingTouch(p0: SeekBar?) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }
