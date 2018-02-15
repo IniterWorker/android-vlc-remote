@@ -55,23 +55,30 @@ class RemoteControllerView @JvmOverloads constructor(context: Context, attrs: At
         player_random.setOnClickListener { actionListener?.onClickRandom() }
         player_repeat.setOnClickListener { actionListener?.onClickRepeat() }
         player_stop.setOnClickListener { actionListener?.onClickStop() }
+        player_retweet.setOnClickListener { actionListener?.onClickLoop() }
     }
 
     fun injectStatus(status: Status) {
         player_tv_current_time.text = status.currentTimeFromated()
         player_tv_end_time.text = status.endTimeFormated()
-        if (status.information!!.category!!.meta!!.title == null )
-            remote_tv_title.text = status.information!!.category!!.meta!!.filename;
-        else
-            remote_tv_title.text = status.information!!.category!!.meta!!.title;
-        remote_tv_quick.text = "";
-        if (status.information!!.category!!.meta!!.artist != null )
-            remote_tv_quick.text = status.information!!.category!!.meta!!.artist;
-        player_position.setProgress((status.position!! * 100).toInt());
-        var volume: Int = (status.volume!! ).toInt();
+        /*
+        when {
+            status.information!!.category!!.meta!!.title != null ->
+                remote_tv_title.text = status.information.category!!.meta!!.title
+            status.information!!.category!!.meta!!.filename != null ->
+                remote_tv_title.text = status.information.category!!.meta!!.filename
+            else ->
+                remote_tv_title.text = "Unknown"
+        }
+        remote_tv_quick.text = ""
+        if (status.information.category!!.meta!!.artist != null )
+            remote_tv_quick.text = status.information.category!!.meta!!.artist
+        */
+        player_position.progress = (status.position!! * 100).toInt()
+        var volume: Int = (status.volume!! ).toInt()
         if (volume > player_volume.max)
             volume = player_volume.max;
-        player_volume.setProgress(volume);
+        player_volume.progress = volume;
     }
 
     interface OnRemoteControllerActionListener {
@@ -90,5 +97,7 @@ class RemoteControllerView @JvmOverloads constructor(context: Context, attrs: At
         fun onClickRandom() {}
 
         fun onClickRepeat() {}
+
+        fun onClickLoop() {}
     }
 }

@@ -6,7 +6,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.SeekBar
 import android.widget.Toast
 import com.epitech.vlcremote.R
 import com.epitech.vlcremote.models.Status
@@ -27,12 +26,11 @@ import java.util.concurrent.TimeUnit
 class PlayerFragment() : TabFragment(), RemoteControllerView.OnRemoteControllerActionListener {
 
 
-    private var status: Status? = null
     private val TAG: String = "PlayerFragment"
     var remoteService: RemoteService? = null
-    lateinit var remoteControllerView: RemoteControllerView
-    lateinit var observalStatus: Observable<Status>
+    private lateinit var statusObservable: Observable<Status>
     private lateinit var scheduler: Scheduler
+    private lateinit var subscription: Disposable
 
     companion object {
         fun newInstance(): PlayerFragment {
@@ -40,51 +38,54 @@ class PlayerFragment() : TabFragment(), RemoteControllerView.OnRemoteControllerA
         }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
-    private var subscription: Disposable? = null
-
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        val view: ConstraintLayout = inflater!!.inflate(R.layout.fragment_player, container, false) as ConstraintLayout
-        remoteControllerView = view.remote_controller
-        remoteControllerView.actionListener = this
+        val view = inflater!!.inflate(R.layout.fragment_player, container, false) as ConstraintLayout
 
-        observalStatus = remoteService!!.vlcService.getVLCStatus(remoteService!!.connection.basicToken())
-        scheduler = Schedulers.newThread()
-        observalStatus
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .repeatWhen { t: Observable<Any> -> t.delay(1, TimeUnit.SECONDS) }
-                .subscribe({ t: Status ->
-                    Log.d(TAG, "runUpdate")
-                }, { error ->
-                    Log.d(TAG, "errorUpdate")
-                })
+        view.remote_controller.actionListener = this
+        view.player_fullscreen.setOnClickListener({ onClickFullScreen() })
+        view.player_subtitle.setOnClickListener({  }) // TODO: make something to handle subtitles
+
+        statusObservable = remoteService!!.vlcService.getVLCStatus(remoteService!!.connection.basicToken())
+
+        scheduler = Schedulers.io()
+
+        subscribeRefresh()
 
         return view
     }
 
+    private fun subscribeRefresh() {
+        subscription = statusObservable
+                .subscribeOn(scheduler)
+                .observeOn(AndroidSchedulers.mainThread())
+                .retry(10)
+                .repeatWhen { t: Observable<Any> -> t.delay(1, TimeUnit.SECONDS) }
+                .subscribe(this::handleSuccess, this::handleError)
+    }
+
+    private fun unsubscribeRefresh() {
+        if (!subscription.isDisposed)
+            subscription.dispose()
+    }
+
     override fun onPause() {
         super.onPause()
-        Log.d(TAG, "onPause")
-        observalStatus.unsubscribeOn(scheduler)
-
+        unsubscribeRefresh()
     }
 
     override fun onResume() {
         super.onResume()
-        Log.d(TAG, "onResume")
-        observalStatus.subscribeOn(scheduler)
+        if (subscription.isDisposed)
+            subscribeRefresh()
     }
 
     private fun handleError(error: Throwable) {
-        Toast.makeText(context, "Not ok", Toast.LENGTH_SHORT).show()
+        error.printStackTrace()
     }
 
     private fun handleSuccess(status: Status) {
-        this.status = status
+        view!!.remote_controller!!.injectStatus(status)
+        view!!.remote_header!!.injectStatus(status)
     }
 
     override fun onSeeking(progress: Int) {
@@ -156,7 +157,7 @@ class PlayerFragment() : TabFragment(), RemoteControllerView.OnRemoteControllerA
                 .subscribe(this::handleSuccess, this::handleError)
     }
 
-    private fun onClickLoop() {
+    override fun onClickLoop() {
         remoteService!!.vlcService!!.toggleLoop(remoteService!!.connection!!.basicToken())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
