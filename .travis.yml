@@ -11,10 +11,13 @@ android:
 jdk:
   - oraclejdk8
 
+env:
+  - ANDROID_HOME=$HOME/android-sdk
+
 licenses:
-    - 'android-sdk-preview-license-.+'
-    - 'android-sdk-license-.+'
-    - 'google-gdk-license-.+'
+  - 'android-sdk-preview-license-.+'
+  - 'android-sdk-license-.+'
+  - 'google-gdk-license-.+'
 
 # cache between builds
 cache:
@@ -23,7 +26,7 @@ cache:
   - $HOME/.gradle
 
 script:
-  - ./gradlew build
+  - ./gradlew --no-daemon --parallel build
 
 before_install:
   - chmod +x gradlew
