@@ -23,7 +23,7 @@ cache:
   - $HOME/.gradle
 
 script:
-  - ./gradlew build connectedCheck
+  - ./gradlew build
 
 before_install:
   - chmod +x gradlew
