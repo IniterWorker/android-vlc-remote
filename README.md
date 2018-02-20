@@ -1,6 +1,6 @@
 # android-vlc-remote
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FIniterWorker%2Fandroid-vlc-remote.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FIniterWorker%2Fandroid-vlc-remote?ref=badge_shield)
-
+[![Build Status](https://travis-ci.org/IniterWorker/android-vlc-remote.svg?branch=master)](https://travis-ci.org/IniterWorker/android-vlc-remote)
 
 A free and open-source Android VLC Remote
 
