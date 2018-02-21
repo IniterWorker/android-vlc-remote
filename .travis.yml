@@ -1,15 +1,29 @@
 language: android
+
 android:
   components:
-    - tools # to get the new `repository-11.xml`
-    - tools # see https://github.com/travis-ci/travis-ci/issues/6040#issuecomment-219367943)
     - platform-tools
-    - build-tools-26.0.1
+    - tools
+    - build-tools-26.0.2
     - android-26
     - extra-android-m2repository
 
+jdk:
+  - oraclejdk8
+
+licenses:
+  - 'android-sdk-preview-license-.+'
+  - 'android-sdk-license-.+'
+  - 'google-gdk-license-.+'
+
+# cache between builds
+cache:
+  directories:
+  - $HOME/.m2
+  - $HOME/.gradle
+
 script:
-  - ./gradlew build
+  - ./gradlew --no-daemon --parallel build
 
 before_install:
   - chmod +x gradlew
@@ -17,3 +31,5 @@ before_install:
 branches:
   only:
     - master
+
+after_failure: "cat $TRAVIS_BUILD_DIR/app/build/outputs/lint-results-debug.xml"
